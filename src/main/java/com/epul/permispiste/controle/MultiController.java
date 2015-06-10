@@ -40,7 +40,7 @@ public class MultiController extends MultiActionController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */	
-	@RequestMapping(value = "index.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "index", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
@@ -55,7 +55,7 @@ public class MultiController extends MultiActionController {
 	/**
 	 * Affichage de tous les jouets
 	 */
-	@RequestMapping(value = "afficherJeux.htm")
+	@RequestMapping(value = "afficherJeux")
 	public ModelAndView afficherLesJeux(HttpServletRequest request,
 		HttpServletResponse response) throws Exception {
 		String destinationPage;	
