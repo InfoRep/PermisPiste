@@ -1,0 +1,27 @@
+URL :
+/apprenant
+parametre id = num (si vide tous afficher)
+
+/apprenant/add
+/apprenant/modif
+/apprenant/suppr
+
+/jeux
+quand parametre id
+Afficher toutes les infos d'un jeu => toutes les actions et indicateurs
+
+
+/** **/
+inscription
+
+num_jeu
+num_apprenant
+date
+
+=> mapping
+
+
+/*** ***/
+Ajouter/modifier/supprimer apprenant
+
+Ne pas faire objectif, missions, ... mettre les données directement dans la vue.

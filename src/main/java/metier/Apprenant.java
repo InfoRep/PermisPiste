@@ -24,6 +24,7 @@ public class Apprenant implements java.io.Serializable {
 	private String nomapprenant;
 	private String prenomapprenant;
 	List<Obtient> mesResultats = new ArrayList<Obtient>();
+	
 
 	public Apprenant() {
 	}

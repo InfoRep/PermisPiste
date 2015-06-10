@@ -39,12 +39,7 @@ public class MultiController extends MultiActionController {
 
 	/**
 	 * Simply selects the home view to render by returning its name.
-	 */
-
-
-	
-	
-	
+	 */	
 	@RequestMapping(value = "index.htm", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -60,24 +55,24 @@ public class MultiController extends MultiActionController {
 	/**
 	 * Affichage de tous les jouets
 	 */
-@RequestMapping(value = "afficherJeux.htm")
-public ModelAndView afficherLesJeux(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-			String destinationPage;	
+	@RequestMapping(value = "afficherJeux.htm")
+	public ModelAndView afficherLesJeux(HttpServletRequest request,
+		HttpServletResponse response) throws Exception {
+		String destinationPage;	
 
-				HibernateClient  unGestClient = new HibernateClient ();
-				try {
-					List<Jeu> mesJeux =unGestClient.getTouteslesLignes();
-					request.setAttribute("mesJeux",mesJeux);
+			HibernateClient  unGestClient = new HibernateClient ();
+			try {
+				List<Jeu> mesJeux =unGestClient.getTouteslesLignes();
+				request.setAttribute("mesJeux",mesJeux);
 
-				} catch (Exception e) {
-					request.setAttribute("MesErreurs", e.getMessage());
-				}
-				destinationPage = "/ListeJeux";
-				
-				return new ModelAndView(destinationPage);
-				
+			} catch (Exception e) {
+				request.setAttribute("MesErreurs", e.getMessage());
 			}
+			destinationPage = "/ListeJeux";
+			
+			return new ModelAndView(destinationPage);
+			
+		}
 }
 
 	
