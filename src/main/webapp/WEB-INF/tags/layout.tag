@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><jsp:invoke fragment="pageTitle" /> ~ Ergosum<% //Titre de la page %> </title>
+<title><jsp:invoke fragment="pageTitle" /> ~ Permis Piste<% //Titre de la page %> </title>
 
 <link rel="icon" type="image/png"
 	href="${pageContext.request.contextPath}/resources/images/icone.png" />
@@ -58,7 +58,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="${pageContext.request.contextPath}/">Ergosum</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/">Permis piste</a>
 		</div>
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

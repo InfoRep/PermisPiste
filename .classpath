@@ -30,6 +30,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/WorkspaceEclispe/PermisPisteHibernate/hibernate-jpa-2.1-api-1.0.0.Draft-6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Elodie/git/PermisPiste/hibernate-jpa-2.1-api-1.0.0.Draft-6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
