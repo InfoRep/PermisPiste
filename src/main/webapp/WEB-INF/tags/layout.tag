@@ -84,6 +84,8 @@
 						<li><a href="${pageContext.request.contextPath}/afficherJeux">Liste des jeux</a></li>
 					</ul>
 				</li>
+				
+				<li><a href=""></a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->

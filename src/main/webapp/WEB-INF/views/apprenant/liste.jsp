@@ -29,11 +29,12 @@
 					 	
 					 	<c:forEach  items="${mesApprenants}"  var="item" >
 					 	<tr class="text-center">
-					     	<td class="id"><a href="modif?id=${item.numero}">${item.numero}</a></td>
-					     	<td class="text-left libelle">${item.libelle}</td>
+					     	<td class="id"><a href="modif?id=${item.numapprenant}">${item.numapprenant}</a></td>
+					     	<td class="text-left libelle">${item.nomapprenant}</td>
+					     	<td class="text-left libelle">${item.prenomapprenant}</td>
 					       
-						  	<td><a href="modif?id=${item.numero}" class="btn btn-primary">Modifier</a></td>
-						  	<td><input type="checkbox" name="id" value="${item.numero}" /></td>
+						  	<td><a href="modif?id=${item.numapprenant}" class="btn btn-primary">Modifier</a></td>
+						  	<td><input type="checkbox" name="id" value="${item.numapprenant}" /></td>
 						  	
 					  	</tr>
 					 	</c:forEach>

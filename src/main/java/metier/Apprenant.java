@@ -34,11 +34,12 @@ public class Apprenant implements java.io.Serializable {
 	}
 
 	public Apprenant(int numapprenant, String nomapprenant,
-			String prenomapprenant, List<Obtient> obtients) {
+			String prenomapprenant, List<Obtient> obtients, List<Inscrit> inscrits) {
 		this.numapprenant = numapprenant;
 		this.nomapprenant = nomapprenant;
 		this.prenomapprenant = prenomapprenant;
 		this.mesResultats = obtients;
+		this.inscrits = inscrits;
 	}
 
 	@Id

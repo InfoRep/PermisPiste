@@ -1,6 +1,5 @@
 package com.epul.permispiste.controle;
 
-
 import metier.*;
 import com.epul.permispiste.dao.JeuHClient;
 
@@ -10,7 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.epul.permispiste.dao.*;
 
-
 /**
  * Handles requests for the application home page.
  */
@@ -39,8 +36,8 @@ public class MultiController extends MultiActionController {
 
 	/**
 	 * Simply selects the home view to render by returning its name.
-	 */	
-	@RequestMapping({"/index", "/"})
+	 */
+	@RequestMapping({ "/index", "/" })
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
@@ -57,22 +54,31 @@ public class MultiController extends MultiActionController {
 	 */
 	@RequestMapping(value = "afficherJeux")
 	public ModelAndView afficherLesJeux(HttpServletRequest request,
-		HttpServletResponse response) throws Exception {
-		String destinationPage;	
+			HttpServletResponse response) throws Exception {
+		String destinationPage;
 
-			JeuHClient  unGestClient = new JeuHClient ();
-			try {
-				List<Jeu> mesJeux =unGestClient.getTouteslesLignes();
-				request.setAttribute("mesJeux",mesJeux);
+		JeuHClient unGestClient = new JeuHClient();
+		try {
+			List<Jeu> mesJeux = unGestClient.getTouteslesLignes();
+			request.setAttribute("mesJeux", mesJeux);
 
-			} catch (Exception e) {
-				request.setAttribute("MesErreurs", e.getMessage());
-			}
-			destinationPage = "/jeux/listeJeux";
-			
-			return new ModelAndView(destinationPage);
-			
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
 		}
-}
+		destinationPage = "/jeux/listeJeux";
 
+		return new ModelAndView(destinationPage);
+
+	}
 	
+	@RequestMapping(value = "connexion")
+	public ModelAndView connexion(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		String destinationPage;
+		
+		destinationPage = "/connexion";
+
+		return new ModelAndView(destinationPage);
+	}
+}

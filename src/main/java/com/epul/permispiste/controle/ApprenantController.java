@@ -95,11 +95,13 @@ public class ApprenantController extends MultiActionController {
 			request.setAttribute("type", "modif");
 			
 			int id = Integer.valueOf(request.getParameter("id"));
+		
 			Apprenant apprenant = new ApprenantHClient().getUneLigne(id);
 			
 			request.setAttribute("apprenant", apprenant);		
 
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			request.setAttribute("MesErreurs", e.getMessage());
 		}
 		
@@ -117,7 +119,6 @@ public class ApprenantController extends MultiActionController {
 		String destinationPage;	
 		ApprenantHClient unGestClient = new ApprenantHClient();
 		
-		System.out.println("help");
 		try {
 			
 			int id = Integer.valueOf(request.getParameter("id"));
