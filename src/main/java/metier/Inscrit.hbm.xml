@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15 juin 2015 09:19:44 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="metier.Inscrit" table="inscrit" catalog="permispiste" optimistic-lock="version">
+        <composite-id name="id" class="metier.InscritId">
+            <key-property name="numjeu" type="int">
+                <column name="NUMJEU" />
+            </key-property>
+            <key-property name="numapprenant" type="int">
+                <column name="NUMAPPRENANT" />
+            </key-property>
+            <key-property name="datejour" type="date">
+                <column name="DATEJOUR" length="10" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="apprenant" class="metier.Apprenant" update="false" insert="false" fetch="select">
+            <column name="NUMAPPRENANT" not-null="true" />
+        </many-to-one>
+        <many-to-one name="calendrier" class="metier.Calendrier" update="false" insert="false" fetch="select">
+            <column name="DATEJOUR" length="10" not-null="true" />
+        </many-to-one>
+        <many-to-one name="jeu" class="metier.Jeu" update="false" insert="false" fetch="select">
+            <column name="NUMJEU" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
