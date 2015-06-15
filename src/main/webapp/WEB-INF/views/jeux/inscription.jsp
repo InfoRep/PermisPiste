@@ -12,20 +12,21 @@
     <jsp:body>
     	<h3>Information de l'apprenant : </h3>
     	<br />
-   		<form method="post" class="form-horizontal">
+   		<form method="post" class="form-horizontal" action="?">
    			<input type="hidden" value="1" name="valid" />
+   			<input type="hidden" value="${idJeu}" name="j" />
    			
    			<div class="form-group">
    				<label for="nom" class="control-label col-md-2">Nom : </label>
    				<div class="col-md-5">
-   					<input type="text" id="nom" name="nom" placeholder="Nom" class="form-control" />
+   					<input type="text" id="nom" name="nom" placeholder="Nom" class="form-control" required />
    				</div>
    			</div>
    			
    			<div class="form-group">
  				<label for="prenom" class="control-label col-md-2">Prenom : </label>
    				<div class="col-md-5">
-   					<input type="text" name="prenom" id="prenom" placeholder="Prenom" class="form-control" />
+   					<input type="text" name="prenom" id="prenom" placeholder="Prenom" class="form-control" required />
    				</div>
    			</div>			
    			

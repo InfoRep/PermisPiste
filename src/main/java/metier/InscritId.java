@@ -2,6 +2,7 @@ package metier;
 
 // Generated 15 juin 2015 09:19:44 by Hibernate Tools 4.3.1
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;

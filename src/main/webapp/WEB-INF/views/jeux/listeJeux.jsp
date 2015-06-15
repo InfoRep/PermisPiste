@@ -23,7 +23,7 @@
 				 	 <tr>
 			    	  	<td class="text-center"><b>${item.numjeu}</b></td>
 		      			<td class="text-center">${item.libellejeu}</td>
-		      			<td class="text-center"><a href="inscription" class="btn btn-primary">S'inscrire</a></td>
+		      			<td class="text-center"><a href="inscription?j=${item.numjeu}" class="btn btn-primary">S'inscrire</a></td>
 					 </tr>
 					 </c:forEach>	
 				</table>

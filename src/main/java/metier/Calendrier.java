@@ -4,9 +4,7 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +39,7 @@ public class Calendrier implements java.io.Serializable {
 	}
 
 	@Id
-	@Temporal(TemporalType.DATE)
+	@Temporal(value = TemporalType.DATE)
 	@Column(name = "DATEJOUR", unique = true, nullable = false, length = 10)
 	public Date getDatejour() {
 		return this.datejour;

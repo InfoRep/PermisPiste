@@ -79,7 +79,8 @@ public class ApprenantHClient {
 		Apprenant unApprenant = null;
 		try {
 			Query query = session.createQuery("SELECT a  FROM Apprenant AS a "
-					+ "WHERE a.nomapprenant = :nom and a.prenomapprenant = :prenom LIMIT 1");
+					+ "WHERE a.nomapprenant = :nom and a.prenomapprenant = :prenom ORDER BY a.numapprenant");
+			query.setMaxResults(1);
 			query.setParameter("nom", nom);
 			query.setParameter("prenom", prenom);
 
