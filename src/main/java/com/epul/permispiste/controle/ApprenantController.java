@@ -66,19 +66,19 @@ public class ApprenantController extends MultiActionController {
 	@RequestMapping(value = "apprenant/saisie")
 	public ModelAndView ajoutApprenant(HttpServletRequest request,
 		HttpServletResponse response) throws Exception {
-		String destinationPage;	
+		String destinationPage = "";	
 		ApprenantHClient unGestClient = new ApprenantHClient();
 		try {
 			request.setAttribute("type", "ajout");
 			
 			Apprenant app = new Apprenant();
-			request.setAttribute("apprenant", app);			
+			request.setAttribute("apprenant", app);		
+			
+			destinationPage = "/apprenant/saisie";
 
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 		}
-		
-		destinationPage = "/apprenant/saisie";
 			
 		return new ModelAndView(destinationPage);
 	}
@@ -89,7 +89,7 @@ public class ApprenantController extends MultiActionController {
 	@RequestMapping(value = "apprenant/modif")
 	public ModelAndView modifApprenant(HttpServletRequest request,
 		HttpServletResponse response) throws Exception {
-		String destinationPage;	
+		String destinationPage = "";	
 		ApprenantHClient unGestClient = new ApprenantHClient();
 		try {
 			request.setAttribute("type", "modif");
@@ -98,15 +98,15 @@ public class ApprenantController extends MultiActionController {
 		
 			Apprenant apprenant = new ApprenantHClient().getUneLigne(id);
 			
-			request.setAttribute("apprenant", apprenant);		
+			request.setAttribute("apprenant", apprenant);	
+
+			destinationPage = "/apprenant/saisie";
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			request.setAttribute("MesErreurs", e.getMessage());
 		}
-		
-		destinationPage = "/apprenant/saisie";
-			
+				
 		return new ModelAndView(destinationPage);
 	}
 	
@@ -116,7 +116,7 @@ public class ApprenantController extends MultiActionController {
 	@RequestMapping(value = "apprenant/sauvegarder")
 	public ModelAndView saveApprenant(HttpServletRequest request,
 		HttpServletResponse response) throws Exception {
-		String destinationPage;	
+		String destinationPage = "/Erreur";	
 		ApprenantHClient unGestClient = new ApprenantHClient();
 		
 		try {
@@ -148,13 +148,13 @@ public class ApprenantController extends MultiActionController {
 						"L'apprenant " + app.getNumapprenant()
 								+ " a bien été ajouté!");
 			}
+			
+			destinationPage = "/apprenant/liste";
 
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			System.out.println(e.getMessage());
 		}
-		
-		destinationPage = "/apprenant/saisie";
 			
 		return new ModelAndView(destinationPage);
 	}

@@ -20,7 +20,7 @@
 	  		<div class="form-group">
 	  			<label for="id" class="control-label col-md-2">Numéro</label>
 	  			<div class="col-md-1">
-	  				<input class="form-control" type="number" name="id" value="${apprenant.numapprenant}" id="id" placeholder="Num" step="1" min="1" required <c:if test="${type == 'modif'}">readonly</c:if>  />
+	  				<input class="form-control" type="number" name="id" value="${apprenant.numapprenant}" id="id" placeholder="num" step="1" min="1" required <c:if test="${type == 'modif'}">readonly</c:if>  />
 	  			</div>
 	  		</div>
 	  		
