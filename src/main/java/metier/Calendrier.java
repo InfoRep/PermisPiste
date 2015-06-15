@@ -26,6 +26,7 @@ public class Calendrier implements java.io.Serializable {
 
 	private Date datejour;
 	List<Obtient> mesResultats = new ArrayList<Obtient>();
+	private List<Inscrit> inscrits = new ArrayList<Inscrit>();
 
 	public Calendrier() {
 	}
@@ -57,6 +58,15 @@ public class Calendrier implements java.io.Serializable {
 
 	public void setObtients(List<Obtient> obtients) {
 		this.mesResultats = obtients;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "calendrier")
+	public List<Inscrit> getInscrits() {
+		return this.inscrits;
+	}
+
+	public void setInscrits(List<Inscrit> inscrits) {
+		this.inscrits = inscrits;
 	}
 
 }

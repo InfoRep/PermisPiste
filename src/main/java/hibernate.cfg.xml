@@ -20,5 +20,6 @@
         <mapping class="metier.Apprenant" />
         <mapping class="metier.Regle" />
         <mapping class="metier.Obtient" />
+        <mapping class="metier.Inscrit" />
     </session-factory>
 </hibernate-configuration>

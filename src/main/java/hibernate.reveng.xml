@@ -15,4 +15,5 @@
   <table-filter match-catalog="permispiste" match-name="obtient"/>
   <table-filter match-catalog="permispiste" match-name="possede"/>
   <table-filter match-catalog="permispiste" match-name="regle"/>
+  <table-filter match-catalog="permispiste" match-name="inscrit" />
 </hibernate-reverse-engineering>

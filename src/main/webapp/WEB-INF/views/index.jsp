@@ -5,9 +5,9 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:layout>
-	<jsp:attribute name="pageTitle">Gestion des jeux</jsp:attribute>
+	<jsp:attribute name="pageTitle">Accueil</jsp:attribute>
 
-    <jsp:attribute name="title">Gestion des jeux</jsp:attribute>
+    <jsp:attribute name="title">Accueil</jsp:attribute>
     
     <jsp:body>
    		<h3 style="margin-top:0">Bienvenue dans l'application Permis Piste !</h3>

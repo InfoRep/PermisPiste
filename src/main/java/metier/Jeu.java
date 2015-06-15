@@ -29,7 +29,7 @@ public class Jeu implements java.io.Serializable {
 	
 	private List<Action> mesActions = new ArrayList<Action>();
 	private List<Mission> mesMissions = new ArrayList<Mission>();
-	
+	private List<Inscrit> inscrits = new ArrayList<Inscrit>();
 
 	public Jeu() {
 	}
@@ -83,4 +83,12 @@ public class Jeu implements java.io.Serializable {
 		this.mesActions = actions;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jeu")
+	public List<Inscrit> getInscrits() {
+		return this.inscrits;
+	}
+
+	public void setInscrits(List<Inscrit> inscrits) {
+		this.inscrits = inscrits;
+	}
 }
