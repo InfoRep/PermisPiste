@@ -5,68 +5,90 @@ import org.hibernate.*;
 import com.epul.permispiste.service.ServiceHibernate;
 import com.epul.permispiste.gestiondeserreurs.MonException;
 import com.epul.permispiste.gestiondeserreurs.ServiceHibernateException;
+
 import metier.*;
 
 import java.util.*;
 
 public class JeuHClient {
-	
-	
-	private List<Jeu> mesJeux = null;
 	private Session session;
-
-	// On r�cup�re toutes les lignes de la table dans une liste
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see hibernate.service.InterfaceHibrnateStage#getTouteslesLignes()
-	 */
-
-	public List<Jeu> getTouteslesLignes() throws HibernateException,
-			ServiceHibernateException {
-		try {
-			session = ServiceHibernate.currentSession();
-			// On passe une requ�te de type SQL mlais on travaille sur la classe
-			Query query = session.createQuery("SELECT j  FROM Jeu AS j");
-			mesJeux =  (List<Jeu>) query.list();
-		} catch (Exception ex) {
-			
-			System.out.println("Erreur ServiceHiber : " + ex.getMessage());
-			
-			throw new MonException("Erreur  Hibernate: ",ex.getMessage());
-		}
-		return mesJeux;
+	
+	public JeuHClient() {
+		session = ServiceHibernate.currentSession();
 	}
 
-	// On r�cup�re une ligne avec une cl�
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * hibernate.service.InterfaceHibrnateStage#getUneLigne(java.lang.String)
+	/**
+	 * Find all jeux selon le libelle 
+	 * @return 
+	 * @throws HibernateException
+	 * @throws ServiceHibernateException
 	 */
-
-	public Jeu getUneLigne(int num) throws ServiceHibernateException ,Exception{
-		boolean trouve = false;
-		Jeu unJeu = null;
+	public List<Jeu> findAll(String libelle) throws HibernateException,
+			ServiceHibernateException {
+		List<Jeu> mesJeux = new ArrayList<Jeu>();
 		try {
-			mesJeux = getTouteslesLignes();
-            int i =0;
-			while (i < mesJeux.size() && !trouve) {
-				unJeu = mesJeux.get(i);
-				if (unJeu.getNumjeu() == num)
-					trouve = true;
-				i++;
+			Query query = session.createQuery("SELECT j  FROM Jeu AS j");
+			
+			if (libelle != null && !libelle.isEmpty())
+			{
+				query = session.createQuery("SELECT j FROM Jeu as j WHERE j.numjeu like :libelle");
+				query.setParameter(":libelle", '%'+libelle+'%');
 			}
-		} catch (ServiceHibernateException ex) {
-			throw new ServiceHibernateException("Erreur de service Hibernate: "
-					+ ex.getMessage(), ex);
+			
+			mesJeux = (List<Jeu>) query.list();
 		} catch (Exception ex) {
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
-		return unJeu;
+		
+		return mesJeux;
+	}
+	
+	/**
+	 * Find all jeux
+	 * @return
+	 * @throws HibernateException
+	 * @throws ServiceHibernateException
+	 */
+	public List<Jeu> findAll() throws HibernateException,
+		ServiceHibernateException {
+		return this.findAll(null);
 	}
 
+	/**
+	 * Find one by id
+	 * @param num
+	 * @return
+	 * @throws ServiceHibernateException
+	 * @throws Exception
+	 */
+	public Jeu find(int num) throws ServiceHibernateException, Exception {
+		Jeu unJeu = null;
+		try {
+			Query query = session.createQuery("SELECT j FROM Jeu AS j WHERE j.numjeu = :num");
+			query.setParameter("num", num);
+			
+			unJeu = (Jeu)query.uniqueResult();
+		} catch (Exception ex) {
+			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
+		}
+		
+		return unJeu;
+	}
 	
+	public List<Jeu> findByIds(List<Integer> nums) throws ServiceHibernateException, Exception 
+	{
+		List<Jeu> mesJeux = new ArrayList<Jeu>();
+		
+		try {
+			Query query = session.createQuery("SELECT j FROM Jeu AS j WHERE j.numjeu in (:nums)");
+			query.setParameterList("nums", nums);
+			
+			mesJeux = (List<Jeu>) query.list();
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
+		}
+		
+		return mesJeux;
+	}
 }

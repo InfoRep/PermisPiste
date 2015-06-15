@@ -1,10 +1,12 @@
 package com.epul.permispiste.controle;
 
 import metier.*;
+
 import com.epul.permispiste.dao.JeuHClient;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,29 +25,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
 import com.epul.permispiste.dao.*;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
-public class MultiController extends MultiActionController {
+public class JeuController extends MultiActionController {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(MultiController.class);
+			.getLogger(JeuController.class);
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Affichage de tous les jouets
 	 */
-	@RequestMapping({ "/index", "/" })
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	@RequestMapping(value = "afficherJeux")
+	public ModelAndView afficherLesJeux(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String destinationPage;
 
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
-				DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
-		model.addAttribute("serverTime", formattedDate);
-		return "/index";
+		JeuHClient unGestClient = new JeuHClient();
+		try {
+			List<Jeu> mesJeux = unGestClient.findAll();
+			
+			request.setAttribute("mesJeux", mesJeux);
+
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+		}
+		destinationPage = "/jeux/listeJeux";
+
+		return new ModelAndView(destinationPage);
+	}
+	
+	@RequestMapping(value = "inscription")
+	public ModelAndView inscription(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String destinationPage = "/jeux/inscription";
+		
+		return new ModelAndView(destinationPage);
 	}
 }
