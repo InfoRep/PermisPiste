@@ -9,7 +9,7 @@ import metier.*;
 
 import java.util.*;
 
-public class HibernateClient {
+public class JeuHClient {
 	
 	
 	private List<Jeu> mesJeux = null;

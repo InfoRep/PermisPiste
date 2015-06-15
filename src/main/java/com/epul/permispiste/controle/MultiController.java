@@ -2,7 +2,7 @@ package com.epul.permispiste.controle;
 
 
 import metier.*;
-import com.epul.permispiste.dao.HibernateClient;
+import com.epul.permispiste.dao.JeuHClient;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -60,7 +60,7 @@ public class MultiController extends MultiActionController {
 		HttpServletResponse response) throws Exception {
 		String destinationPage;	
 
-			HibernateClient  unGestClient = new HibernateClient ();
+			JeuHClient  unGestClient = new JeuHClient ();
 			try {
 				List<Jeu> mesJeux =unGestClient.getTouteslesLignes();
 				request.setAttribute("mesJeux",mesJeux);

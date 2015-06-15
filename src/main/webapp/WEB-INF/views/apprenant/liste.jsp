@@ -1,12 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ page session="false" %>
 
-</body>
-</html>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+<t:layout>
+	<jsp:attribute name="pageTitle">Liste apprenants</jsp:attribute>
+
+    <jsp:attribute name="title">Liste des apprenants : (${fn:length(mesApprenants)})</jsp:attribute>
+    
+    <jsp:body>
+   		<div class="row">
+        	<div class="col-md-12">
+		        <form method="post" action="effacerApprenant.htm"> 
+			        <table class="table">
+				  		<tr>
+						 	<TH> 
+						 		Numero 
+					 		</TH>
+							<TH> Nom de l'apprenant </TH>
+						 	<TH> 
+						 		Prénom de l'apprenant
+					 		</TH>
+						 	<th></th>
+						 	<TH><button class="btn btn-danger"> Supprimer </button></TH>
+				 		</tr>
+					 	
+					 	<c:forEach  items="${mesApprenants}"  var="item" >
+					 	<tr class="text-center">
+					     	<td class="id"><a href="modifierApprenant.htm?id=${item.numero}">${item.numero}</a></td>
+					     	<td class="text-left libelle">${item.libelle}</td>
+					       
+						  	<td><a href="modifierApprenant.htm?id=${item.numero}" class="btn btn-primary">Modifier</a></td>
+						  	<td><input type="checkbox" name="id" value="${item.numero}" /></td>
+						  	
+					  	</tr>
+					 	</c:forEach>
+					</table>
+				</form>
+			</div>
+		</div>
+    </jsp:body>
+</t:layout>
+

@@ -67,40 +67,23 @@
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-						Jouets
+						Apprenants
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="${pageContext.request.contextPath}/jouet/afficherJouets.htm">Lister</a></li>
-						<li><a href="${pageContext.request.contextPath}/jouet/ajouterJouet.htm">Ajouter</a></li>
-						<li class="divider"></li>
-						<li>
-							<form method="post" role="search" action="${pageContext.request.contextPath}/jouet/afficherJouets.htm">
-						        <div class="form-group"  style="margin-bottom:2px;">
-						        	<div class="input-group">
-							        	<span class="input-group-addon" style="padding: 2px" id="basic-addon1">
-							        		<button style="padding:0;margin: 0" class="btn-link glyphicon glyphicon-search"></button>
-							        	</span>
-							         	<input type="text" class="form-control" placeholder="numero" <c:if test="${not empty numeroSearch}">value="${numeroSearch}"</c:if> name="numero" />
-							         </div>
-						        </div>
-					     	</form>
-					     	<a href="${pageContext.request.contextPath}/jouet/rechercheAvancee.htm">Recherche avancée</a>
-						</li>
+						<li><a href="${pageContext.request.contextPath}/apprenant/liste">Lister</a></li>
+						<li><a href="${pageContext.request.contextPath}/apprenant/saisie">Ajouter</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-						Catalogues
+						Jeu
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="${pageContext.request.contextPath}/catalogue/selectionnerAnnee.htm">Par interval</a></li>
-						<li><a href="${pageContext.request.contextPath}/catalogue/selectionnerAnnee.htm?cat">Par catégorie</a></li>
+						<li><a href="${pageContext.request.contextPath}/ListeJeux">Liste des jeux</a></li>
 					</ul>
 				</li>
-				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-				<li><a href="${pageContext.request.contextPath}/dictionnaires.htm">Dictionnaires</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
