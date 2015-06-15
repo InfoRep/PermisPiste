@@ -14,7 +14,7 @@
     </jsp:attribute>
     
     <jsp:body>
-	  	<form method="post" action="sauverApprenant.htm" class="form-horizontal" id="form">
+	  	<form method="post" action="sauvegarder" class="form-horizontal" id="form">
 	  		<input type="hidden" name="type" value="${type}"  id="type"/>
 	  		
 	  		<div class="form-group">
@@ -47,7 +47,7 @@
 				   <input type="submit" class="btn btn-primary" value="Modifier" />
 				</c:if>
 				
-				<a href="afficherApprenants.htm" class="btn btn-default">Retour</a>
+				<a href="liste" class="btn btn-default">Retour</a>
 	  		</div>
 	  	</form>
     </jsp:body>

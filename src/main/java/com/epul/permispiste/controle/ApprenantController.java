@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.epul.permispiste.dao.*;
+import com.epul.permispiste.gestiondeserreurs.MonException;
 
 
 /**
@@ -100,6 +101,56 @@ public class ApprenantController extends MultiActionController {
 
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
+		}
+		
+		destinationPage = "/apprenant/saisie";
+			
+		return new ModelAndView(destinationPage);
+	}
+	
+	/**
+	 * Sauvegarder un apprenant
+	 */
+	@RequestMapping(value = "apprenant/sauvegarder")
+	public ModelAndView saveApprenant(HttpServletRequest request,
+		HttpServletResponse response) throws Exception {
+		String destinationPage;	
+		ApprenantHClient unGestClient = new ApprenantHClient();
+		
+		System.out.println("help");
+		try {
+			
+			int id = Integer.valueOf(request.getParameter("id"));
+			Apprenant app = null;
+			if (request.getParameter("type").equals("ajout"))
+			{ //ajoute d'un apprenant
+				app = new Apprenant();
+			}				
+			else 
+			{ // modification on récupère l'apprenant courant
+				app = unGestClient.getUneLigne(id);
+			}
+			
+			app.setNumapprenant(id);
+			app.setNomapprenant(request.getParameter("nom"));
+			app.setPrenomapprenant(request.getParameter("prenom"));
+			
+			// sauvegarde du jouet
+			if (request.getParameter("type").equals("modif")) {
+				unGestClient.modifier(app);
+				request.setAttribute("messSuccess",
+						"L'apprenant " + app.getNumapprenant()
+								+ " a bien été modifié!");
+			} else {
+				unGestClient.ajouter(app);
+				request.setAttribute("messSuccess",
+						"L'apprenant " + app.getNumapprenant()
+								+ " a bien été ajouté!");
+			}
+
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			System.out.println(e.getMessage());
 		}
 		
 		destinationPage = "/apprenant/saisie";

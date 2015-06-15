@@ -43,6 +43,8 @@ public class ApprenantHClient {
 			Query query = session.createQuery("SELECT j  FROM Apprenant AS j WHERE j.numapprenant = :num");
 			query.setParameter("num", num);
 			
+			unApprenant = (Apprenant) query.uniqueResult();
+			
 		} catch (ServiceHibernateException ex) {
 			throw new ServiceHibernateException("Erreur de service Hibernate: "
 					+ ex.getMessage(), ex);
@@ -50,5 +52,43 @@ public class ApprenantHClient {
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
 		return unApprenant;
+	}
+	
+	public void ajouter(Apprenant app) throws ServiceHibernateException ,Exception{
+		Apprenant unApprenant = new Apprenant();
+		try {
+			
+			Query query = session.createQuery("INSERT INTO apprenant VALUES (:num, :nom, :prenom)");
+			query.setParameter("num", app.getNumapprenant());
+			query.setParameter("nom", app.getNomapprenant());
+			query.setParameter("prenom", app.getPrenomapprenant());
+			
+			query.executeUpdate();
+			
+		} catch (ServiceHibernateException ex) {
+			throw new ServiceHibernateException("Erreur de service Hibernate: "
+					+ ex.getMessage(), ex);
+		} catch (Exception ex) {
+			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
+		}
+	}
+	
+	public void modifier(Apprenant app) throws ServiceHibernateException ,Exception{
+		Apprenant unApprenant = new Apprenant();
+		try {
+			
+			Query query = session.createQuery("UPDATE apprenant SET nomapprenant = :nom, prenomapprenant = :prenom WHERE numapprenant = :num ");
+			query.setParameter("num", app.getNumapprenant());
+			query.setParameter("nom", app.getNomapprenant());
+			query.setParameter("prenom", app.getPrenomapprenant());
+			
+			query.executeUpdate();
+			
+		} catch (ServiceHibernateException ex) {
+			throw new ServiceHibernateException("Erreur de service Hibernate: "
+					+ ex.getMessage(), ex);
+		} catch (Exception ex) {
+			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
+		}
 	}
 }

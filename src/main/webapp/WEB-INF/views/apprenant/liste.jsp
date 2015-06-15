@@ -13,7 +13,7 @@
     <jsp:body>
    		<div class="row">
         	<div class="col-md-12">
-		        <form method="post" action="effacerApprenant.htm"> 
+		        <form method="post" action="apprenant/supprimer"> 
 			        <table class="table">
 				  		<tr>
 						 	<TH> 
@@ -29,10 +29,10 @@
 					 	
 					 	<c:forEach  items="${mesApprenants}"  var="item" >
 					 	<tr class="text-center">
-					     	<td class="id"><a href="modifierApprenant.htm?id=${item.numero}">${item.numero}</a></td>
+					     	<td class="id"><a href="modif?id=${item.numero}">${item.numero}</a></td>
 					     	<td class="text-left libelle">${item.libelle}</td>
 					       
-						  	<td><a href="modifierApprenant.htm?id=${item.numero}" class="btn btn-primary">Modifier</a></td>
+						  	<td><a href="modif?id=${item.numero}" class="btn btn-primary">Modifier</a></td>
 						  	<td><input type="checkbox" name="id" value="${item.numero}" /></td>
 						  	
 					  	</tr>
