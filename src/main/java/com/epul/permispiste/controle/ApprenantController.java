@@ -7,6 +7,7 @@ import com.epul.permispiste.dao.JeuHClient;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +49,7 @@ public class ApprenantController extends MultiActionController {
 		String destinationPage;	
 		ApprenantHClient unGestClient = new ApprenantHClient();
 		try {
-			List<Apprenant> mesApprenants = unGestClient.getTouteslesLignes();
+			List<Apprenant> mesApprenants = unGestClient.getTouteslesLignes(request.getParameter("s"));
 			request.setAttribute("mesApprenants",mesApprenants);
 
 		} catch (Exception e) {
@@ -149,13 +150,56 @@ public class ApprenantController extends MultiActionController {
 								+ " a bien été ajouté!");
 			}
 			
-			destinationPage = "/apprenant/liste";
+			return new ModelAndView ("redirect:liste");
 
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			System.out.println(e.getMessage());
 		}
 			
+		return new ModelAndView(destinationPage);
+	}
+	
+	/**
+	 * supprimer un apprenant
+	 */
+	@RequestMapping(value = "apprenant/supprimer")
+	public ModelAndView effacerApprenant(HttpServletRequest request,
+		HttpServletResponse response) throws Exception {
+		String destinationPage = "";	
+
+		ApprenantHClient unGestClient = new ApprenantHClient();
+		
+		try {
+			
+			String[] idsstr = request.getParameterValues("id");
+			if (idsstr.length > 0)
+			{
+				List<Integer> ids = new ArrayList<Integer>();
+				for (String id : idsstr)
+				{
+					ids.add(Integer.valueOf(id));
+				}
+				
+				List<Apprenant> apps = unGestClient.getLignes(ids);					
+				for (Apprenant a : apps)
+				{
+					unGestClient.effacer(a);
+				}
+					
+				request.setAttribute("messSuccess", "Les apprenants ont bien été supprimés.");
+				return new ModelAndView ("redirect:liste");
+				
+			}
+			else 
+			{
+				request.setAttribute("messWarning", "Aucun apprenant n'a été sélectionné.");
+			}
+				
+		} catch (Exception e) {
+			destinationPage = "/Erreur";
+			request.setAttribute("MesErreurs", e.getMessage());
+		}
 		return new ModelAndView(destinationPage);
 	}
 	

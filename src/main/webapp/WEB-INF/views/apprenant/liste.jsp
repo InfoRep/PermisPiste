@@ -13,7 +13,7 @@
     <jsp:body>
    		<div class="row">
         	<div class="col-md-12">
-		        <form method="post" action="apprenant/supprimer"> 
+		        <form method="post" action="supprimer"> 
 			        <table class="table">
 				  		<tr>
 						 	<TH> 
