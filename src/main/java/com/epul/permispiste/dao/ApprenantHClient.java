@@ -47,7 +47,7 @@ public class ApprenantHClient {
 			ServiceHibernateException {
 		try {
 			Query query = session.createQuery("SELECT a  FROM Apprenant AS a WHERE a.numapprenant in (:nums)");
-			query.setParameter("nums", nums);
+			query.setParameterList("nums", nums);
 			mesApprenants = (List<Apprenant>) query.list();
 		} catch (Exception ex) {
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
