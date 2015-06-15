@@ -62,6 +62,17 @@
 		</div>
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<form class="navbar-form navbar-left" method="get" role="search" action="${pageContext.request.contextPath}/apprenant/liste">
+		        <div class="form-group">
+		        	<div class="input-group">
+			        	<span class="input-group-addon" id="basic-addon1">
+			        		<button style="padding:0px;" class="btn-link glyphicon glyphicon-search"></button>
+			        	</span>
+			         	<input type="text" class="form-control" placeholder="Nom apprenant" name="s" />
+			         </div>
+		        </div>
+	     	</form>
+			     	
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="${pageContext.request.contextPath}/">Accueil</a></li>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
@@ -84,8 +95,6 @@
 						<li><a href="${pageContext.request.contextPath}/afficherJeux">Liste des jeux</a></li>
 					</ul>
 				</li>
-				
-				<li><a href=""></a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
