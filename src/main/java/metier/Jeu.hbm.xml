@@ -25,5 +25,11 @@
                 <column name="NUMACTION" not-null="true" />
             </many-to-many>
         </set>
+        <set name="inscrits" table="inscrit" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NUMJEU" not-null="true" />
+            </key>
+            <one-to-many class="metier.Inscrit" />
+        </set>
     </class>
 </hibernate-mapping>

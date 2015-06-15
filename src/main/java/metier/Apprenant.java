@@ -5,7 +5,6 @@ package metier;
 
 import java.util.*;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,6 +23,7 @@ public class Apprenant implements java.io.Serializable {
 	private String nomapprenant;
 	private String prenomapprenant;
 	List<Obtient> mesResultats = new ArrayList<Obtient>();
+	private List<Inscrit> inscrits = new ArrayList<Inscrit>();
 	
 
 	public Apprenant() {
@@ -77,5 +77,13 @@ public class Apprenant implements java.io.Serializable {
 	public void setObtients(List<Obtient> obtients) {
 		this.mesResultats = obtients;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apprenant")
+	public List<Inscrit> getInscrits() {
+		return this.inscrits;
+	}
 
+	public void setInscrits(List<Inscrit> inscrits) {
+		this.inscrits = inscrits;
+	}
 }

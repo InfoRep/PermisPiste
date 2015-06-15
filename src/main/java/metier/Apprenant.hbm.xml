@@ -20,5 +20,11 @@
             </key>
             <one-to-many class="metier.Obtient" />
         </set>
+        <set name="inscrits" table="inscrit" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NUMAPPRENANT" not-null="true" />
+            </key>
+            <one-to-many class="metier.Inscrit" />
+        </set>
     </class>
 </hibernate-mapping>
