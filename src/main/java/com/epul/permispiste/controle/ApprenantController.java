@@ -1,34 +1,24 @@
 package com.epul.permispiste.controle;
 
 
-import metier.*;
-
-import com.epul.permispiste.dao.JeuHClient;
-
-import java.io.IOException;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map.Entry;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import metier.Apprenant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.epul.permispiste.dao.*;
-import com.epul.permispiste.gestiondeserreurs.MonException;
+import com.epul.permispiste.dao.ApprenantHClient;
 
 
 /**
@@ -45,19 +35,27 @@ public class ApprenantController extends MultiActionController {
 	 */
 	@RequestMapping(value = "apprenant/liste")
 	public ModelAndView afficherLesApprenants(HttpServletRequest request,
-		HttpServletResponse response) throws Exception {
+			HttpServletResponse response, 
+			RedirectAttributes redirectAttrs) 
+					throws Exception {
 		String destinationPage;	
-		ApprenantHClient unGestClient = new ApprenantHClient();
+		ApprenantHClient unGestClient = new ApprenantHClient();		
 		try {
+			//Attribute from redirection
+			for (Entry<String, Object> e : redirectAttrs.asMap().entrySet())
+				request.setAttribute(e.getKey(), e.getValue()); //add attributes to the page
+			
+			//Liste apprenants
 			List<Apprenant> mesApprenants = unGestClient.getTouteslesLignes(request.getParameter("s"));
 			request.setAttribute("mesApprenants",mesApprenants);
-
+	
+			destinationPage = "/apprenant/liste";
+			
 		} catch (Exception e) {
+			destinationPage = "/Erreur";	
 			request.setAttribute("MesErreurs", e.getMessage());
 		}
 		
-		destinationPage = "/apprenant/liste";
-			
 		return new ModelAndView(destinationPage);
 	}
 	
@@ -78,6 +76,7 @@ public class ApprenantController extends MultiActionController {
 			destinationPage = "/apprenant/saisie";
 
 		} catch (Exception e) {
+			destinationPage = "/Erreur";
 			request.setAttribute("MesErreurs", e.getMessage());
 		}
 			
@@ -104,7 +103,7 @@ public class ApprenantController extends MultiActionController {
 			destinationPage = "/apprenant/saisie";
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			destinationPage = "/Erreur";
 			request.setAttribute("MesErreurs", e.getMessage());
 		}
 				
@@ -116,7 +115,9 @@ public class ApprenantController extends MultiActionController {
 	 */
 	@RequestMapping(value = "apprenant/sauvegarder")
 	public ModelAndView saveApprenant(HttpServletRequest request,
-		HttpServletResponse response) throws Exception {
+		HttpServletResponse response, 
+		RedirectAttributes redirectAttrs) 
+				throws Exception {
 		String destinationPage = "/Erreur";	
 		ApprenantHClient unGestClient = new ApprenantHClient();
 		
@@ -140,12 +141,12 @@ public class ApprenantController extends MultiActionController {
 			// sauvegarde du jouet
 			if (request.getParameter("type").equals("modif")) {
 				unGestClient.modifier(app);
-				request.setAttribute("messSuccess",
+				redirectAttrs.addFlashAttribute("messSuccess",
 						"L'apprenant " + app.getNumapprenant()
 								+ " a bien été modifié!");
 			} else {
 				unGestClient.ajouter(app);
-				request.setAttribute("messSuccess",
+				redirectAttrs.addFlashAttribute("messSuccess",
 						"L'apprenant " + app.getNumapprenant()
 								+ " a bien été ajouté!");
 			}
@@ -153,8 +154,8 @@ public class ApprenantController extends MultiActionController {
 			return new ModelAndView ("redirect:liste");
 
 		} catch (Exception e) {
+			destinationPage = "/Erreur";
 			request.setAttribute("MesErreurs", e.getMessage());
-			System.out.println(e.getMessage());
 		}
 			
 		return new ModelAndView(destinationPage);
@@ -165,7 +166,9 @@ public class ApprenantController extends MultiActionController {
 	 */
 	@RequestMapping(value = "apprenant/supprimer")
 	public ModelAndView effacerApprenant(HttpServletRequest request,
-		HttpServletResponse response) throws Exception {
+		HttpServletResponse response, 
+		RedirectAttributes redirectAttrs) 
+				throws Exception {
 		String destinationPage = "";	
 
 		ApprenantHClient unGestClient = new ApprenantHClient();
@@ -173,7 +176,7 @@ public class ApprenantController extends MultiActionController {
 		try {
 			
 			String[] idsstr = request.getParameterValues("id");
-			if (idsstr.length > 0)
+			if (idsstr != null || (idsstr != null && idsstr.length > 0))
 			{
 				List<Integer> ids = new ArrayList<Integer>();
 				for (String id : idsstr)
@@ -187,18 +190,18 @@ public class ApprenantController extends MultiActionController {
 					unGestClient.effacer(a);
 				}
 					
-				request.setAttribute("messSuccess", "Les apprenants ont bien été supprimés.");
-				return new ModelAndView ("redirect:liste");
-				
+				redirectAttrs.addFlashAttribute("messSuccess", "Les apprenants ont bien été supprimés.");		
 			}
 			else 
 			{
-				request.setAttribute("messWarning", "Aucun apprenant n'a été sélectionné.");
+				redirectAttrs.addFlashAttribute("messWarning", "Aucun apprenant n'a été sélectionné.");
 			}
-				
+			
+			return new ModelAndView ("redirect:liste");
+			
 		} catch (Exception e) {
 			destinationPage = "/Erreur";
-			request.setAttribute("MesErreurs", e.getMessage());
+			request.setAttribute("MesErreurs", e);
 		}
 		return new ModelAndView(destinationPage);
 	}

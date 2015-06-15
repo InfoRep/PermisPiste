@@ -22,6 +22,10 @@ public class ApprenantHClient {
 		session = ServiceHibernate.currentSession();
 	}
 	
+	/**
+	 * Selectionner tous les apprenants avec un filtre nom
+	 * @param nom filtre nom
+	 */
 	public List<Apprenant> getTouteslesLignes(String nom) throws HibernateException,
 			ServiceHibernateException {
 		try {			
@@ -43,6 +47,18 @@ public class ApprenantHClient {
 		return mesApprenants;
 	}
 	
+	/**
+	 * Selectionner tous les apprenants
+	 */
+	public List<Apprenant> getTouteslesLignes() throws HibernateException,
+			ServiceHibernateException {
+		return this.getTouteslesLignes(null);
+	}
+	
+	/**
+	 * Selectionner les apprenants selon leur id
+	 * @param nums ids
+	 */
 	public List<Apprenant> getLignes(List<Integer> nums) throws HibernateException,
 			ServiceHibernateException {
 		try {
@@ -55,6 +71,29 @@ public class ApprenantHClient {
 		return mesApprenants;
 	}
 	
+	/**
+	 * Selectionner l'apprenant selon le couple (nom, prenom)
+	 */
+	public Apprenant getUneLigne(String nom, String prenom) throws HibernateException,
+			ServiceHibernateException {
+		Apprenant unApprenant = null;
+		try {
+			Query query = session.createQuery("SELECT a  FROM Apprenant AS a "
+					+ "WHERE a.nomapprenant = :nom and a.prenomapprenant = :prenom LIMIT 1");
+			query.setParameter("nom", nom);
+			query.setParameter("prenom", prenom);
+
+			unApprenant = (Apprenant) query.uniqueResult();
+		} catch (Exception ex) {
+			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
+		}
+		return unApprenant;
+	}
+	
+	/**
+	 * Selectionner un apprenant selon son id
+	 * @param num id 
+	 */
 	public Apprenant getUneLigne(int num) throws ServiceHibernateException ,Exception{
 		Apprenant unApprenant = null;
 		try {
@@ -71,6 +110,9 @@ public class ApprenantHClient {
 		return unApprenant;
 	}
 	
+	/**
+	 * Ajouter un apprenant
+	 */
 	public void ajouter(Apprenant app) throws ServiceHibernateException ,Exception{
 		try {			
 			session.beginTransaction();
@@ -84,6 +126,9 @@ public class ApprenantHClient {
 		}
 	}
 	
+	/**
+	 * Modifier un apprenant
+	 */
 	public void modifier(Apprenant app) throws ServiceHibernateException ,Exception{
 		try {			
 			session.beginTransaction();
@@ -97,6 +142,9 @@ public class ApprenantHClient {
 		}
 	}
 	
+	/**
+	 * Effacer un apprenant
+	 */
 	public void effacer(Apprenant app) throws ServiceHibernateException ,Exception{
 		try {			
 			session.beginTransaction();
