@@ -68,7 +68,7 @@ public class MultiController extends MultiActionController {
 			} catch (Exception e) {
 				request.setAttribute("MesErreurs", e.getMessage());
 			}
-			destinationPage = "/ListeJeux";
+			destinationPage = "/jeux/listeJeux";
 			
 			return new ModelAndView(destinationPage);
 			

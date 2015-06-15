@@ -81,7 +81,7 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="${pageContext.request.contextPath}/ListeJeux">Liste des jeux</a></li>
+						<li><a href="${pageContext.request.contextPath}/afficherJeux">Liste des jeux</a></li>
 					</ul>
 				</li>
 			</ul>

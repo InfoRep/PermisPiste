@@ -25,7 +25,6 @@ public class JeuHClient {
 	public List<Jeu> getTouteslesLignes() throws HibernateException,
 			ServiceHibernateException {
 		try {
-			System.out.println("Get toutes les lignes :Je vais lire le fichier de conf ");
 			session = ServiceHibernate.currentSession();
 			// On passe une requ�te de type SQL mlais on travaille sur la classe
 			Query query = session.createQuery("SELECT j  FROM Jeu AS j");
