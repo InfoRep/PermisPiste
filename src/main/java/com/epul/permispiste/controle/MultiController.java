@@ -40,7 +40,7 @@ public class MultiController extends MultiActionController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */	
-	@RequestMapping(value = "index", method = RequestMethod.GET)
+	@RequestMapping({"/index", "/"})
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
