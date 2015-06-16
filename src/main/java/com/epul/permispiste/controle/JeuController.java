@@ -37,7 +37,7 @@ public class JeuController extends MultiActionController {
 	/**
 	 * Affichage de tous les jouets
 	 */
-	@RequestMapping(value = "jeux/liste")
+	@RequestMapping(value = "/jeux/liste")
 	public ModelAndView afficherLesJeux(HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes redirectAttrs)
 			throws Exception {
@@ -66,7 +66,7 @@ public class JeuController extends MultiActionController {
 		return new ModelAndView(destinationPage);
 	}
 
-	@RequestMapping(value = "jeux/inscription")
+	@RequestMapping(value = "/jeux/inscription")
 	public ModelAndView inscription(HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes redirectAttrs)
 			throws Exception {
@@ -94,9 +94,9 @@ public class JeuController extends MultiActionController {
 					// calendrier
 					Calendrier c = new Calendrier(new Date(System.currentTimeMillis()));
 
-					// creation inscription
-					Inscrit inscr = new InscriptionHClient().find(a, c, j);
-					if (inscr != null) {
+					// check inscription
+					if (new InscriptionHClient().checkFind(a, c, j)) 
+					{
 						redirectAttrs
 								.addFlashAttribute(
 										"messWarning",
@@ -107,7 +107,7 @@ public class JeuController extends MultiActionController {
 												+ " est dejà inscrit aujourd'hui pour le jeu "
 												+ j.getLibellejeu());
 					} else {
-						inscr = new Inscrit(new InscritId(
+						Inscrit inscr = new Inscrit(new InscritId(
 								j.getNumjeu(), a.getNumapprenant(),
 								c.getDatejour()), a, c, j);
 
@@ -131,27 +131,6 @@ public class JeuController extends MultiActionController {
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destinationPage = "/Erreur";
-		}
-
-		return new ModelAndView(destinationPage);
-	}
-	
-	@RequestMapping(value = "jeux/mesMissions")
-	public ModelAndView e(HttpServletRequest request,
-			HttpServletResponse response)
-			throws Exception {
-		
-		String destinationPage;
-		try {
-			// find all game
-			List<Jeu> mesJeux = new JeuHClient().findAll(request
-					.getParameter("sJeu"));
-			request.setAttribute("mesJeux", mesJeux);
-
-			destinationPage = "/jeux/listeJeux";
-		} catch (Exception e) {
-			destinationPage = "/Erreur";
-			request.setAttribute("MesErreurs", e.getMessage());
 		}
 
 		return new ModelAndView(destinationPage);

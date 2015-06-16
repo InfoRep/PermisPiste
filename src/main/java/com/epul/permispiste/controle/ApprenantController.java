@@ -33,7 +33,7 @@ public class ApprenantController extends MultiActionController {
 	/**
 	 * Affichage de tous les apprenants
 	 */
-	@RequestMapping(value = "apprenant/liste")
+	@RequestMapping(value = "/apprenant/liste")
 	public ModelAndView afficherLesApprenants(HttpServletRequest request,
 			HttpServletResponse response, 
 			RedirectAttributes redirectAttrs) 
@@ -62,7 +62,7 @@ public class ApprenantController extends MultiActionController {
 	/**
 	 * Saisie d'un apprenant
 	 */
-	@RequestMapping(value = "apprenant/saisie")
+	@RequestMapping(value = "/apprenant/saisie")
 	public ModelAndView ajoutApprenant(HttpServletRequest request,
 		HttpServletResponse response) throws Exception {
 		String destinationPage = "";	
@@ -86,7 +86,7 @@ public class ApprenantController extends MultiActionController {
 	/**
 	 * Modifier un apprenant
 	 */
-	@RequestMapping(value = "apprenant/modif")
+	@RequestMapping(value = "/apprenant/modif")
 	public ModelAndView modifApprenant(HttpServletRequest request,
 		HttpServletResponse response) throws Exception {
 		String destinationPage = "";	
@@ -113,7 +113,7 @@ public class ApprenantController extends MultiActionController {
 	/**
 	 * Sauvegarder un apprenant
 	 */
-	@RequestMapping(value = "apprenant/sauvegarder")
+	@RequestMapping(value = "/apprenant/sauvegarder")
 	public ModelAndView saveApprenant(HttpServletRequest request,
 		HttpServletResponse response, 
 		RedirectAttributes redirectAttrs) 
@@ -164,7 +164,7 @@ public class ApprenantController extends MultiActionController {
 	/**
 	 * supprimer un apprenant
 	 */
-	@RequestMapping(value = "apprenant/supprimer")
+	@RequestMapping(value = "/apprenant/supprimer")
 	public ModelAndView effacerApprenant(HttpServletRequest request,
 		HttpServletResponse response, 
 		RedirectAttributes redirectAttrs) 

@@ -19,9 +19,6 @@ public class JeuHClient {
 
 	/**
 	 * Find all jeux selon le libelle 
-	 * @return 
-	 * @throws HibernateException
-	 * @throws ServiceHibernateException
 	 */
 	public List<Jeu> findAll(String libelle) throws HibernateException,
 			ServiceHibernateException {
@@ -46,9 +43,6 @@ public class JeuHClient {
 	
 	/**
 	 * Find all jeux
-	 * @return
-	 * @throws HibernateException
-	 * @throws ServiceHibernateException
 	 */
 	public List<Jeu> findAll() throws HibernateException,
 		ServiceHibernateException {
@@ -57,10 +51,6 @@ public class JeuHClient {
 
 	/**
 	 * Find one by id
-	 * @param num
-	 * @return
-	 * @throws ServiceHibernateException
-	 * @throws Exception
 	 */
 	public Jeu find(int num) throws ServiceHibernateException, Exception {
 		Jeu unJeu = null;
@@ -76,6 +66,9 @@ public class JeuHClient {
 		return unJeu;
 	}
 	
+	/**
+	 * Find jeux by ids
+	 */
 	public List<Jeu> findByIds(List<Integer> nums) throws ServiceHibernateException, Exception 
 	{
 		List<Jeu> mesJeux = new ArrayList<Jeu>();

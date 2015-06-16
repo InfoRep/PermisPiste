@@ -23,6 +23,7 @@
 						 	<TH> 
 						 		Prénom de l'apprenant
 					 		</TH>
+					 		<th></th>
 						 	<th></th>
 						 	<TH><button class="btn btn-danger"> Supprimer </button></TH>
 				 		</tr>
@@ -32,7 +33,7 @@
 					     	<td class="id"><a href="modif?id=${item.numapprenant}">${item.numapprenant}</a></td>
 					     	<td class="text-left libelle">${item.nomapprenant}</td>
 					     	<td class="text-left libelle">${item.prenomapprenant}</td>
-					       
+					        <td><a href="../missions?idA=${item.numapprenant}" class="btn btn-success">Missions</a></td>
 						  	<td><a href="modif?id=${item.numapprenant}" class="btn btn-primary">Modifier</a></td>
 						  	<td><input type="checkbox" name="id" value="${item.numapprenant}" /></td>
 						  	

@@ -31,6 +31,11 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	
+	<!-- Log all SQL DML statements as they are executed -->
+	<logger name="org.hibernate.SQL">
+		<level value="debug" />
+	</logger>
 
 	<!-- Root Logger -->
 	<root>

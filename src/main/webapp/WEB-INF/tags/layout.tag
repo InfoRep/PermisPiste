@@ -76,7 +76,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="${pageContext.request.contextPath}/">Accueil</a></li>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-				<li><a href="${pageContext.request.contextPath}/mesmissions">Mes missions</a></li>
+				<li><a href="${pageContext.request.contextPath}/missions">Missions</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						Apprenants

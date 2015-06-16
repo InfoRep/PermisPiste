@@ -17,10 +17,15 @@ public class InscriptionHClient {
 		session = ServiceHibernate.currentSession();
 	}
 
-	public void insert(Inscrit inscr) {
+	/**
+	 * Insertion
+	 */
+	public void insert(Inscrit inscr) throws HibernateException,
+			ServiceHibernateException {
 		try {
 			session.beginTransaction();
-			session.saveOrUpdate(inscr.getCalendrier()); //calendrier must be not null
+			session.saveOrUpdate(inscr.getCalendrier()); // calendrier must be
+															// not null
 			session.save(inscr);
 			session.getTransaction().commit();
 		} catch (ServiceHibernateException ex) {
@@ -32,8 +37,11 @@ public class InscriptionHClient {
 		}
 	}
 
-	public Inscrit find(Apprenant a, Calendrier c, Jeu j) {
-		Inscrit inscr = null;
+	/**
+	 * Trouver une inscription selon un apprenant, une date et un jeu
+	 */
+	public boolean checkFind(Apprenant a, Calendrier c, Jeu j)
+			throws HibernateException, ServiceHibernateException {
 		try {
 			Query query = session
 					.createQuery("SELECT inscr FROM Inscrit inscr WHERE inscr.apprenant = :a and inscr.calendrier = :c and inscr.jeu = :j");
@@ -41,10 +49,31 @@ public class InscriptionHClient {
 			query.setParameter("c", c);
 			query.setParameter("j", j);
 
-			inscr = (Inscrit) query.uniqueResult();
+			return (null != query.uniqueResult());
 		} catch (Exception ex) {
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
-		return inscr;
+	}
+
+	public List<Inscrit> findByApprennant(Apprenant a)
+			throws HibernateException, ServiceHibernateException {
+		List<Inscrit> inscrits = new ArrayList<Inscrit>();
+
+		try {
+			Query query = session
+					.createQuery("SELECT inscr FROM Inscrit inscr "
+							+ "JOIN FETCH inscr.jeu j "	//avoid lazy loading
+						//	+ "JOIN FETCH j.missions miss "
+							+ "WHERE inscr.apprenant = :a "
+							+ "GROUP BY inscr.jeu");
+
+			query.setParameter("a", a);
+
+			inscrits = (List<Inscrit>) query.list();
+		} catch (Exception ex) {
+			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
+		}
+
+		return inscrits;
 	}
 }

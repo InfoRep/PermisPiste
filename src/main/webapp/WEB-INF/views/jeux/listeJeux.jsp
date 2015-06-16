@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -8,15 +9,10 @@
 	<jsp:attribute name="pageTitle">Liste des jeux</jsp:attribute>
 	
 	<jsp:attribute name="title">
-		Liste de jeux<c:if test="${not empty sJeu}"> avec "${sJeu}"</c:if>
+		Liste de jeux<c:if test="${not empty sJeu}"> avec "${sJeu}"</c:if> : (${fn:length(mesJeux)})
 	</jsp:attribute>
 	
 	<jsp:body>
-		<div class="row">
-			<div class="col-md-offset-2 col-md-10">
-				
-			</div>
-		</div>
 		<div class="row">
         	<div class="col-md-12">
         		<form method="get" role="search" action="liste">
