@@ -54,6 +54,7 @@ public class JeuController extends MultiActionController {
 			List<Jeu> mesJeux = new JeuHClient().findAll(request
 					.getParameter("sJeu"));
 			request.setAttribute("mesJeux", mesJeux);
+			request.setAttribute("sJeu", request.getParameter("sJeu"));
 
 			destinationPage = "/jeux/listeJeux";
 
@@ -130,6 +131,27 @@ public class JeuController extends MultiActionController {
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destinationPage = "/Erreur";
+		}
+
+		return new ModelAndView(destinationPage);
+	}
+	
+	@RequestMapping(value = "jeux/mesMissions")
+	public ModelAndView e(HttpServletRequest request,
+			HttpServletResponse response)
+			throws Exception {
+		
+		String destinationPage;
+		try {
+			// find all game
+			List<Jeu> mesJeux = new JeuHClient().findAll(request
+					.getParameter("sJeu"));
+			request.setAttribute("mesJeux", mesJeux);
+
+			destinationPage = "/jeux/listeJeux";
+		} catch (Exception e) {
+			destinationPage = "/Erreur";
+			request.setAttribute("MesErreurs", e.getMessage());
 		}
 
 		return new ModelAndView(destinationPage);

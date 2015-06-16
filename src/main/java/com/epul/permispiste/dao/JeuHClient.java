@@ -31,12 +31,13 @@ public class JeuHClient {
 			
 			if (libelle != null && !libelle.isEmpty())
 			{
-				query = session.createQuery("SELECT j FROM Jeu as j WHERE j.numjeu like :libelle");
-				query.setParameter(":libelle", '%'+libelle+'%');
+				query = session.createQuery("SELECT j FROM Jeu as j WHERE j.libellejeu like :libelle");
+				query.setParameter("libelle", '%'+libelle+'%');
 			}
 			
 			mesJeux = (List<Jeu>) query.list();
 		} catch (Exception ex) {
+			System.out.println(ex);
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
 		

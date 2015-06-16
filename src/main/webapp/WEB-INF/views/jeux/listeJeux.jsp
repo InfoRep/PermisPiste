@@ -7,26 +7,45 @@
 <t:layout>
 	<jsp:attribute name="pageTitle">Liste des jeux</jsp:attribute>
 	
-	<jsp:attribute name="title">Liste de jeux</jsp:attribute>
+	<jsp:attribute name="title">
+		Liste de jeux<c:if test="${not empty sJeu}"> avec "${sJeu}"</c:if>
+	</jsp:attribute>
 	
 	<jsp:body>
 		<div class="row">
+			<div class="col-md-offset-2 col-md-10">
+				
+			</div>
+		</div>
+		<div class="row">
         	<div class="col-md-12">
-		        <table class="table table-striped">
-			  		<tr>
-					 	<th>Numéro Jeu</th>
-						<th>Libellé du jeu</th>
-						<th>Inscription</th>
-			 		</tr>
-				 	
-				 	 <c:forEach  items="${mesJeux}"  var="item" >
-				 	 <tr>
-			    	  	<td class="text-center"><b>${item.numjeu}</b></td>
-		      			<td class="text-center">${item.libellejeu}</td>
-		      			<td class="text-center"><a href="inscription?j=${item.numjeu}" class="btn btn-primary">S'inscrire</a></td>
-					 </tr>
-					 </c:forEach>	
-				</table>
+        		<form method="get" role="search" action="liste">
+			        <table class="table table-striped">
+				  		<tr>
+						 	<th>Numéro Jeu</th>
+							<th>
+								Libellé du jeu
+								<div class="form-group">
+						        	<div class="input-group">
+							        	<span class="input-group-addon" id="basic-addon1">
+							        		<button style="padding:0px;" class="btn-link glyphicon glyphicon-search"></button>
+							        	</span>
+							         	<input type="text" class="form-control" placeholder="Rechercher" name="sJeu" />
+							         </div>
+						        </div>
+							</th>
+							<th>Inscription</th>
+				 		</tr>
+					 	
+					 	 <c:forEach  items="${mesJeux}"  var="item" >
+					 	 <tr>
+				    	  	<td class="text-center"><b>${item.numjeu}</b></td>
+			      			<td class="text-center">${item.libellejeu}</td>
+			      			<td class="text-center"><a href="inscription?j=${item.numjeu}" class="btn btn-primary">S'inscrire</a></td>
+						 </tr>
+						 </c:forEach>	
+					</table>
+				</form>
 			</div>
 		</div>
 	</jsp:body>
