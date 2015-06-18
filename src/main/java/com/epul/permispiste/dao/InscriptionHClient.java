@@ -54,26 +54,25 @@ public class InscriptionHClient {
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
 	}
-
-	public List<Inscrit> findByApprennant(Apprenant a)
+	
+	public List<Inscrit> getInscrJeu(Apprenant a)
 			throws HibernateException, ServiceHibernateException {
-		List<Inscrit> inscrits = new ArrayList<Inscrit>();
-
+		List<Inscrit> objs = new ArrayList<Inscrit>();
 		try {
 			Query query = session
-					.createQuery("SELECT inscr FROM Inscrit inscr "
+					.createQuery("SELECT inscr "
+							+ "FROM Inscrit inscr "
 							+ "JOIN FETCH inscr.jeu j "	//avoid lazy loading
-						//	+ "JOIN FETCH j.missions miss "
 							+ "WHERE inscr.apprenant = :a "
-							+ "GROUP BY inscr.jeu");
+							+ "GROUP BY j");
 
 			query.setParameter("a", a);
 
-			inscrits = (List<Inscrit>) query.list();
+			objs = (List<Inscrit>)query.list();
 		} catch (Exception ex) {
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
 
-		return inscrits;
+		return objs;
 	}
 }

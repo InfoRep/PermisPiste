@@ -69,10 +69,10 @@ public class MultiController extends MultiActionController {
 
 				if (a != null) {
 					//selectionner la liste des jeux de l'apprenant
-					List<Inscrit> inscrits = new InscriptionHClient().findByApprennant(a);
+					List<Inscrit> objs = new InscriptionHClient().getInscrJeu(a);
 					
 					request.setAttribute("apprenant", a);
-					request.setAttribute("inscrits", inscrits);
+					request.setAttribute("objs", objs);
 					
 					destinationPage = "/jeux/missions";
 				} else {
