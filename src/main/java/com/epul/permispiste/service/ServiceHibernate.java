@@ -15,9 +15,9 @@ public class ServiceHibernate {
 	static {
 
 		try {
-			
+
 			// on lit la configuration du fichier hibernate.cfg.xml
-			System.out.println("Je vais lire le fichier de conf ");  
+			System.out.println("Je vais lire le fichier de conf ");
 			Configuration configuration = new Configuration();
 			configuration.configure();
 			serviceRegistry = new StandardServiceRegistryBuilder()
@@ -31,30 +31,25 @@ public class ServiceHibernate {
 							+ ex.getMessage(), ex);
 		}
 	}
-	
-	
-	
-	 
-
-	
 
 	public static final ThreadLocal<Session> session = new ThreadLocal<Session>();
 
 	public static Session currentSession() throws ServiceHibernateException {
 		Session s = null;
 		try {
-			s = (Session) session.get();
+			//s = (Session) session.get();
 			// Open a new Session, if this Thread has none yet
 			if (s == null) {
 				s = sessionFactory.openSession();
-				session.set(s);
+				//session.set(s);
+				System.out.println("Open session");
 			}
 		} catch (Exception ex) {
 			System.out.println("session " + ex.getMessage());
 			throw new ServiceHibernateException(
 					"Impossible d'accéder à la SessionFactory: "
 							+ ex.getMessage(), ex);
-			
+
 		}
 		return s;
 	}
@@ -64,7 +59,22 @@ public class ServiceHibernate {
 			Session s = (Session) session.get();
 			session.set(null);
 			if (s != null)
+			{
 				s.close();
+				System.out.println("Close session");
+			}
+				
+		} catch (Exception ex) {
+			throw new ServiceHibernateException(
+					"Impossible de fermer la SessionFactory: "
+							+ ex.getMessage(), ex);
+		}
+	}
+	
+	public static void reloadSession() throws ServiceHibernateException {
+		try {
+			closeSession();
+			currentSession();
 		} catch (Exception ex) {
 			throw new ServiceHibernateException(
 					"Impossible de fermer la SessionFactory: "
