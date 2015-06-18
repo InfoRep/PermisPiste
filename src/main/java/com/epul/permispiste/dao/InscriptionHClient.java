@@ -64,7 +64,7 @@ public class InscriptionHClient {
 							+ "FROM Inscrit inscr "
 							+ "JOIN FETCH inscr.jeu j "	//avoid lazy loading
 							+ "WHERE inscr.apprenant = :a "
-							+ "GROUP BY j");
+							+ "GROUP BY inscr");
 
 			query.setParameter("a", a);
 
