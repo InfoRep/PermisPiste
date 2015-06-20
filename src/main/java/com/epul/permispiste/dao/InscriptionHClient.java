@@ -1,14 +1,25 @@
 package com.epul.permispiste.dao;
 
-import org.hibernate.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import com.epul.permispiste.service.ServiceHibernate;
+import metier.Apprenant;
+import metier.Calendrier;
+import metier.Inscrit;
+import metier.Jeu;
+import metier.Mission;
+import metier.Objectif;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import com.epul.permispiste.gestiondeserreurs.MonException;
 import com.epul.permispiste.gestiondeserreurs.ServiceHibernateException;
-
-import metier.*;
-
-import java.util.*;
+import com.epul.permispiste.service.ServiceHibernate;
 
 public class InscriptionHClient {
 	private Session session;
@@ -55,24 +66,64 @@ public class InscriptionHClient {
 		}
 	}
 	
-	public List<Inscrit> getInscrJeu(Apprenant a)
+	public List<Object[]> getActions(Apprenant a, 
+									 Jeu j,
+									 Calendrier c,
+									 Mission m,
+									 Objectif obj) 
 			throws HibernateException, ServiceHibernateException {
-		List<Inscrit> objs = new ArrayList<Inscrit>();
+		List<Object[]> objs = new ArrayList<>();
+		
 		try {
-			Query query = session
-					.createQuery("SELECT inscr "
-							+ "FROM Inscrit inscr "
-							+ "JOIN FETCH inscr.jeu j "	//avoid lazy loading
-							+ "WHERE inscr.apprenant = :a "
-							+ "GROUP BY inscr");
-
-			query.setParameter("a", a);
-
-			objs = (List<Inscrit>)query.list();
+			Map<String, Object> parameters = new HashMap<>();
+			
+			String str = "SELECT act, obj, m, i, obt.valeurfin, obt.valeurdebut, c "
+						+ "FROM Action act "
+						+ "LEFT JOIN FETCH act.obtients obt "	
+						+ "LEFT JOIN obt.calendrier c "
+						+ "JOIN act.objectifs obj "
+						+ "JOIN obj.missions m "
+						+ "JOIN FETCH m.jeu j "
+						+ "JOIN j.inscrits i "
+						+ "WHERE (obt = null or obt.apprenant = i.apprenant) ";
+					
+			//apprenant
+			str += "and i.apprenant = :a ";
+			parameters.put("a", a);
+			
+			//objectif
+			if (obj != null)
+			{
+				str += "and obj = :objec ";
+				parameters.put("objec", obj);
+			}
+			if (m != null)
+			{
+				str += "and m = :miss ";
+				parameters.put("miss", m);
+			}
+			if (j != null)
+			{
+				str += "and j = :je ";
+				parameters.put("je", j);
+			}
+			if (c != null)
+			{
+				str += "and i.calendrier = :c ";
+				parameters.put("c", c);
+			}
+			
+			str += "ORDER BY i, j, m, obj, act ";
+			
+			Query query = session.createQuery(str);
+			for (Entry<String, Object> e : parameters.entrySet())
+				query.setParameter(e.getKey(), e.getValue());
+			
+			objs = (List<Object[]>)query.list();
 		} catch (Exception ex) {
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
-
+	
 		return objs;
 	}
 }
