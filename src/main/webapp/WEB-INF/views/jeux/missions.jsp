@@ -99,8 +99,6 @@
 				</c:if>				
 								
 				<c:if test="${i != inscrit}">
-					<c:set var="i" value="${inscrit}"></c:set>
-					
 					<c:if test="${not empty idM or not empty idO}">
 						<h3>${ jeu.libellejeu } <span class="text-warning">inscrit le ${ inscrit.calendrier.datejour }</span></h3>
 					</c:if>
@@ -134,6 +132,7 @@
 									<p class="text-success">Cliquez sur une mission pour voir les objectifs</p>
 									<div class="panel-group" id="accordion-${cpt}-${ jeu.numjeu }" role="tablist" aria-multiselectable="true">
 					</c:if>
+					<c:set var="i" value="${inscrit}"></c:set>
 				</c:if>
 				
 				<c:if test="${m != mission && empty idO}">
