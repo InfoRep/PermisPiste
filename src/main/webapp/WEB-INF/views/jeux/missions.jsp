@@ -9,7 +9,7 @@
 <t:layout>
 	<jsp:attribute name="pageTitle">Missions</jsp:attribute>
 	
-	<jsp:attribute name="title">Liste des missions par jeux pour "${apprenant.prenomapprenant} ${apprenant.nomapprenant}" : </jsp:attribute>
+	<jsp:attribute name="title">Liste des actions triées pour "${apprenant.prenomapprenant} ${apprenant.nomapprenant}" : </jsp:attribute>
 	
 	<jsp:attribute name="javascripts">
 		<script type="text/javascript">
@@ -58,10 +58,11 @@
 			
 			<c:if test="${not empty idO or not empty idM or not empty idJ or not empty idC}">
 				<a class="btn btn-default" href="?idA=${apprenant.numapprenant}">Retour à la racine</a>
-				<br /><br />
 			</c:if>
 			
-			<p class="text-success">Cliquez sur un jeu pour voir les missions</p>
+			<c:if test="${empty idO && empty idM }">
+				<p class="text-success">Cliquez sur un jeu pour voir les missions</p>
+			</c:if>
 			
 			<c:set var="i"></c:set>
 			<c:set var="m"></c:set>
@@ -78,7 +79,7 @@
 				<c:set var="actDate" value="${item[6]}"></c:set>
 				<c:set var="jeu" value="${ inscrit.jeu }"></c:set>
 						
-				<c:if test="${i != inscrit && not empty i }">
+				<c:if test="${i != inscrit && not empty i && empty idO && empty idM}">
 					<c:set var="m" value="0"></c:set>
 					<c:set var="o" value="0"></c:set>
 				</c:if>		
@@ -90,7 +91,7 @@
 					</div>
 				</c:if>				
 								
-				<c:if test="${m != mission && not empty m}">
+				<c:if test="${m != mission && not empty m && empty idO}">
 								</div>
 							</div>
 						</div>
@@ -98,39 +99,46 @@
 				</c:if>				
 								
 				<c:if test="${i != inscrit}">
-					<c:if test="${not empty i}">
-								</div>
-							</div>
-						</div>
-					</div>	
-					<br />
-					</c:if>
 					<c:set var="i" value="${inscrit}"></c:set>
 					
-					<div class="panel panel-primary inscrit">
-						<div class="panel-heading" role="tab">	
-							<div class="panel-title row" role="button" data-parent="#accordion" data-toggle="collapse" href="#${ cpt }-${ jeu.numjeu }" aria-expanded="false" aria-controls="jeu">
-								<div class="col-md-1">
-									<span class="glyphicon glyphicon-menu-down"></span>
-									&nbsp;&nbsp;&nbsp;<img src="resources/images/game.png" width="30" height="30" />
-								</div>
-								<div class="col-md-9">
-									<a href="?idA=${apprenant.numapprenant}&idC=${inscrit.calendrier.datejour}&idJ=${jeu.numjeu}" style="color:white">${ jeu.libellejeu } <span class="text-warning">inscrit le ${ inscrit.calendrier.datejour }</span></a>
-								</div>
-								<div class="col-md-2 text-right">
-									<i class="glyphicon glyphicon-triangle-bottom"></i>
+					<c:if test="${not empty idM or not empty idO}">
+						<h3>${ jeu.libellejeu } <span class="text-warning">inscrit le ${ inscrit.calendrier.datejour }</span></h3>
+					</c:if>
+					
+					<c:if test="${empty idM && empty idO}">
+						<c:if test="${not empty i}">
+									</div>
 								</div>
 							</div>
-						</div>
-						
-						<div id="${cpt}-${ jeu.numjeu }" class="panel-collapse collapse" role="tabpanel">
-							<div class="panel-body">
-								<p class="text-success">Cliquez sur une mission pour voir les objectifs</p>
-								<div class="panel-group" id="accordion-${cpt}-${ jeu.numjeu }" role="tablist" aria-multiselectable="true">
+						</div>	
+						<br />
+						</c:if>						
+						<div class="panel panel-primary inscrit">
+							<div class="panel-heading" role="tab">	
+								<div class="panel-title row" role="button" data-parent="#accordion" data-toggle="collapse" href="#${ cpt }-${ jeu.numjeu }" aria-expanded="false" aria-controls="jeu">
+									<div class="col-md-1">
+										<span class="glyphicon glyphicon-menu-down"></span>
+										&nbsp;&nbsp;&nbsp;<img src="resources/images/game.png" width="30" height="30" />
+									</div>
+									<div class="col-md-9">
+										<a href="?idA=${apprenant.numapprenant}&idC=${inscrit.calendrier.datejour}&idJ=${jeu.numjeu}" style="color:white">${ jeu.libellejeu } <span class="text-warning">inscrit le ${ inscrit.calendrier.datejour }</span></a>
+									</div>
+									<div class="col-md-2 text-right">
+										<i class="glyphicon glyphicon-triangle-bottom"></i>
+									</div>
+								</div>
+							</div>
+							
+							<div id="${cpt}-${ jeu.numjeu }" class="panel-collapse collapse" role="tabpanel">
+								<div class="panel-body">
+									<p class="text-success">Cliquez sur une mission pour voir les objectifs</p>
+									<div class="panel-group" id="accordion-${cpt}-${ jeu.numjeu }" role="tablist" aria-multiselectable="true">
+					</c:if>
 				</c:if>
 				
-				<c:if test="${m != mission}">
+				<c:if test="${m != mission && empty idO}">
 					<c:set var="m" value="${mission}"></c:set>
+					
 					<div class="panel panel-success mission">
 						<div class="panel-heading" role="tab">
 							<div class="panel-title row" role="button" data-parent="#accordion-${cpt}-${jeu.numjeu}" data-toggle="collapse" href="#${cpt}-${jeu.numjeu}_${mission.nummission}" aria-expanded="false" aria-controls="jeu">	
@@ -187,7 +195,7 @@
 						${action.libaction}
 					</td>
 					<td>
-						<c:if test="${empty actDate}">
+						<c:if test="${not empty actDate}">
 						Score : ${actVal}
 						</c:if>
 					</td>
@@ -205,7 +213,13 @@
 				
 				<c:set var="cpt" value="${cpt+1}"></c:set>
 			</c:forEach>
-			</table></div></div></div></div></div></div></div></div></div></div></div>
+			</table></div></div></div>
+			<c:if test="${empty idO}">
+				</div></div></div></div>
+			</c:if>
+			<c:if test="${empty idM && empty idO}">
+				</div></div></div></div>
+			</c:if>
 			</div>
 		</c:if>
 		<c:if test="${size == 0}">
