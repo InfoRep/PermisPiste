@@ -13,32 +13,57 @@
 	
 	<jsp:attribute name="javascripts">
 		<script type="text/javascript">
-			$(document).ready(function() {
-				$.each($(".inscrit"), function() {
-					//inscrit
-					$.each($(this).find('.mission'), function() {
-						//mission
-						var nbObjMax = 0;
-						var nbObjValid = 0;
-						$.each($(this).find('.objectif'), function() {
-							//objectif
-							var nbActionMax = 0;
-							var nbActionValid = 0;
-							$.each($(this).find('.action'), function() {
-								//action
-								var val = $($(this).find('.actionValid')[0]).val()*1;
-								nbActionMax += 1;
-								nbActionValid += val;
-							});
-							$($(this).find('.nbValid')[0]).text(nbActionValid);
-							$($(this).find('.nbMax')[0]).text(nbActionMax);
-							nbObjMax += 1;
-							nbObjValid += (nbActionMax == nbActionValid ? 1 : 0);
-						});
-						$($(this).find('.nbValid')[0]).text(nbObjValid);
-						$($(this).find('.nbMax')[0]).text(nbObjMax);
-					});		
+			function cptMission(elems) {
+				$.each(elems, function() {
+					//mission
+					var nbObj = cptObjectif($(this).find('.objectif')); //compter objectifs
+					
+					$($(this).find('.nbValid')[0]).text(nbObj.nbObjValid);
+					$($(this).find('.nbMax')[0]).text(nbObj.nbObjMax);
+				});	
+			}
+	
+			function cptObjectif(elems) {
+				var nbObjMax = 0;
+				var nbObjValid = 0;
+	
+				$.each(elems, function() {
+					//objectif
+					var nbAction = cptAction($(this).find('.action')); //compter action
+					
+					
+					$($(this).find('.nbValid')[0]).text(nbAction.nbActionValid);
+					$($(this).find('.nbMax')[0]).text(nbAction.nbActionMax);
+					nbObjMax += 1;
+					nbObjValid += (nbAction.nbActionMax == nbAction.nbActionValid ? 1 : 0);
 				});
+				
+				return {'nbObjMax' : nbObjMax, 'nbObjValid' : nbObjValid};
+			}
+	
+			function cptAction(elems) {
+				var nbActionMax = 0;
+				var nbActionValid = 0;
+				$.each(elems, function() {
+					//action
+					var val = $($(this).find('.actionValid')[0]).val()*1;
+					nbActionMax += 1;
+					nbActionValid += val;
+				});
+				
+				return {'nbActionMax' : nbActionMax, 'nbActionValid' : nbActionValid};
+			}
+			
+			$(document).ready(function() {
+				var missions = $(".mission");
+				if (missions.length > 0)
+				{
+					cptMission(missions); //compter mission
+				} else {
+
+				}
+				
+				$('.panel-title a').click(function() { $(location).prop('href', $(this).attr('href')); });
 			});
 		</script>
 	</jsp:attribute>
@@ -59,6 +84,8 @@
 			<c:if test="${not empty idO or not empty idM or not empty idJ or not empty idC}">
 				<a class="btn btn-default" href="?idA=${apprenant.numapprenant}">Retour à la racine</a>
 			</c:if>
+			
+			<p>Cliquez sur les icônes pour n'afficher les jeux, missions, ..</p>
 			
 			<c:if test="${empty idO && empty idM }">
 				<p class="text-success">Cliquez sur un jeu pour voir les missions</p>
@@ -116,10 +143,13 @@
 								<div class="panel-title row" role="button" data-parent="#accordion" data-toggle="collapse" href="#${ cpt }-${ jeu.numjeu }" aria-expanded="false" aria-controls="jeu">
 									<div class="col-md-1">
 										<span class="glyphicon glyphicon-menu-down"></span>
-										&nbsp;&nbsp;&nbsp;<img src="resources/images/game.png" width="30" height="30" />
+										&nbsp;&nbsp;&nbsp;
+										<a href="?idA=${apprenant.numapprenant}&idC=${inscrit.calendrier.datejour}&idJ=${jeu.numjeu}">
+											<img src="resources/images/game.png" width="30" height="30" />
+										</a>
 									</div>
 									<div class="col-md-9">
-										<a href="?idA=${apprenant.numapprenant}&idC=${inscrit.calendrier.datejour}&idJ=${jeu.numjeu}" style="color:white">${ jeu.libellejeu } <span class="text-warning">inscrit le ${ inscrit.calendrier.datejour }</span></a>
+										${ jeu.libellejeu } <span class="text-warning">inscrit le ${ inscrit.calendrier.datejour }</span>
 									</div>
 									<div class="col-md-2 text-right">
 										<i class="glyphicon glyphicon-triangle-bottom"></i>
@@ -143,10 +173,13 @@
 							<div class="panel-title row" role="button" data-parent="#accordion-${cpt}-${jeu.numjeu}" data-toggle="collapse" href="#${cpt}-${jeu.numjeu}_${mission.nummission}" aria-expanded="false" aria-controls="jeu">	
 								<div class="col-md-1">
 									<span class="glyphicon glyphicon-menu-down"></span>
-									&nbsp;&nbsp;&nbsp;<img src="resources/images/note.png" width="20" height="20" />
+									&nbsp;&nbsp;&nbsp;
+									<a href="?idA=${apprenant.numapprenant}&idC=${inscrit.calendrier.datejour}&idJ=${jeu.numjeu}&idM=${mission.nummission}">
+										<img src="resources/images/note.png" width="20" height="20" />
+									</a>
 								</div>
 								<div class="col-md-6">
-									<a href="?idA=${apprenant.numapprenant}&idC=${inscrit.calendrier.datejour}&idJ=${jeu.numjeu}&idM=${mission.nummission}" style="color:white">${mission.libmission}</a>
+									${mission.libmission}</a>
 								</div>
 								<div class="col-md-3 text-right">
 									<span class="nbValid"></span> / <span class="nbMax"></span>
@@ -170,10 +203,13 @@
 							<div class="panel-title row" role="button" data-parent="#accordion-${cpt}-${jeu.numjeu}_${mission.nummission}" data-toggle="collapse" href="#${cpt}-${jeu.numjeu}_${mission.nummission}_${objectif.numobjectif}" aria-expanded="false" aria-controls="jeu">
 								<div class="col-md-1">
 									<span class="glyphicon glyphicon-menu-down"></span>
-									&nbsp;&nbsp;&nbsp;<img src="resources/images/objectif.png" width="30" height="30" />
+									&nbsp;&nbsp;&nbsp;
+									<a href="?idA=${apprenant.numapprenant}&idC=${inscrit.calendrier.datejour}&idJ=${jeu.numjeu}&idM=${mission.nummission}&idO=${objectif.numobjectif}">
+										<img src="resources/images/objectif.png" width="30" height="30" />
+									</a>
 								</div>
 								<div class="col-md-6">
-									<a href="?idA=${apprenant.numapprenant}&idC=${inscrit.calendrier.datejour}&idJ=${jeu.numjeu}&idM=${mission.nummission}&idO=${objectif.numobjectif}" style="color:white">${objectif.libobectif}</a>
+									${objectif.libobectif}
 								</div>
 								<div class="col-md-3 text-right">
 									<span class="nbValid"></span> / <span class="nbMax"></span>
