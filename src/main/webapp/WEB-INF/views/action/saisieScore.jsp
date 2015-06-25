@@ -13,6 +13,7 @@
     <jsp:body>
     	<h3>Informations : </h3>
     	<p>Pour l'apprenant <b>${apprenant.prenomapprenant} ${apprenant.nomapprenant}</b> concernant l'action <b>${action.numaction}</b> avec le libellé <b>${action.libaction}</b>.</p>
+    	<p>Le score final se calcul avec la différence entre la valeur de fin et la valeur de début.</p>
     	<br />
    		<form method="post" class="form-horizontal" action="?">
    			<input type="hidden" value="${apprenant.numapprenant}" name="idAp" />

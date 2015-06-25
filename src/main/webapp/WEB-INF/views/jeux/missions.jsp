@@ -89,7 +89,7 @@
 				<a class="btn btn-primary" href="?idA=${apprenant.numapprenant}" style="border:2px ridge white">Retour à la racine</a>
 			</c:if>
 			<p class="btn-danger text-center" style="margin-top:5px; margin-bottom: 0; border-radius:10px 10px 0 0; padding-bottom:5px">
-				Pour pouvoir enregistrer un score pour action, il faut que l'action parent est été validée et que l'action ne possède pas déjà un score avec une date supérieur ou égal à l'inscription au jeu.
+				Pour pouvoir enregistrer un score pour action, il faut que l'action parent a été validée et que l'action ne possède pas déjà un score avec une date supérieure ou égale à l'inscription au jeu.
 			</p>
 			<p class="btn-default text-center" style="margin-top:0; border-radius:0 0 10px 10px; padding-top:5px">Cliquez sur les icônes pour n'afficher que les jeux, missions ou objectifs</p>
 			
@@ -110,7 +110,7 @@
 				<c:set var="inscrit" value="${item[3]}"></c:set>
 				<c:set var="jeu" value="${ inscrit.jeu }"></c:set>
 				
-				<c:set var="actVal" value="0"></c:set>
+				<c:set var="actVal" value="-999"></c:set>
 				<c:set var="actDate" value=""></c:set>
 				<c:forEach items="${inscrit.apprenant.obtients}" var="obt">
 					<c:if test="${obt.action == action && obt.calendrier.datejour >= inscrit.calendrier.datejour && obt.valeurfin-obt.valeurdebut > actVal}">
