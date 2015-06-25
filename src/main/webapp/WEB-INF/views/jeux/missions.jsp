@@ -78,18 +78,20 @@
 		<c:if test="${size > 0}">
 			<c:choose>
 				<c:when test="${not empty idO}">
-					<a class="btn btn-default" href="?idA=${apprenant.numapprenant}&idC=${idC}&idJ=${idJ}&idM=${idM}">Retour par mission</a>
+					<a class="btn btn-primary" style="border:2px ridge white" href="?idA=${apprenant.numapprenant}&idC=${idC}&idJ=${idJ}&idM=${idM}">Retour par mission</a>
 				</c:when>
 				<c:when test="${not empty idM}">
-					<a class="btn btn-default" href="?idA=${apprenant.numapprenant}&idC=${idC}&idJ=${idJ}">Retour par jeu</a>
+					<a class="btn btn-primary" style="border:2px ridge white" href="?idA=${apprenant.numapprenant}&idC=${idC}&idJ=${idJ}">Retour par jeu</a>
 				</c:when>
 			</c:choose>
 			
 			<c:if test="${not empty idO or not empty idM or not empty idJ or not empty idC}">
-				<a class="btn btn-default" href="?idA=${apprenant.numapprenant}">Retour à la racine</a>
+				<a class="btn btn-primary" href="?idA=${apprenant.numapprenant}" style="border:2px ridge white">Retour à la racine</a>
 			</c:if>
-			<p class="text-danger">Le score obtenu pour une action doit avoir été enregistré après l'inscription au jeu pour être pris en compte.</p>
-			<p>Cliquez sur les icônes pour n'afficher que les jeux, missions ou objectifs</p>
+			<p class="btn-danger text-center" style="margin-top:5px; margin-bottom: 0; border-radius:10px 10px 0 0; padding-bottom:5px">
+				Pour pouvoir enregistrer un score pour action, il faut que l'action parent est été validée et que l'action ne possède pas déjà un score avec une date supérieur ou égal à l'inscription au jeu.
+			</p>
+			<p class="btn-default text-center" style="margin-top:0; border-radius:0 0 10px 10px; padding-top:5px">Cliquez sur les icônes pour n'afficher que les jeux, missions ou objectifs</p>
 			
 			<c:if test="${empty idO && empty idM }">
 				<p class="text-success">Cliquez sur un jeu pour voir les missions</p>
