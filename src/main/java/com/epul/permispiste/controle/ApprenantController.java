@@ -124,7 +124,14 @@ public class ApprenantController extends MultiActionController {
 		try {
 			
 			int id = Integer.valueOf(request.getParameter("id"));
-			Apprenant app = null;
+			Apprenant app = new ApprenantHClient().getUneLigne(id);
+			if (app != null)
+			{
+				redirectAttrs.addFlashAttribute("messError",
+						"Ce numéro d'apprenant est déjà réservé !");
+				return new ModelAndView ("redirect:liste");
+			}
+			
 			if (request.getParameter("type").equals("ajout"))
 			{ //ajoute d'un apprenant
 				app = new Apprenant();
