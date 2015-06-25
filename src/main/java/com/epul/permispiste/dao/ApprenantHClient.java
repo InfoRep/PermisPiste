@@ -3,7 +3,8 @@ package com.epul.permispiste.dao;
 import java.util.List;
 
 import metier.Apprenant;
-import metier.Jeu;
+import metier.Inscrit;
+import metier.Obtient;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -149,6 +150,15 @@ public class ApprenantHClient {
 	public void effacer(Apprenant app) throws ServiceHibernateException ,Exception{
 		try {			
 			session.beginTransaction();
+			
+			//suppression obtient
+			for(Obtient o : app.getObtients())
+				session.delete(o);
+			
+			//suppression inscrit
+			for(Inscrit i : app.getInscrits())
+				session.delete(i);
+			
 			session.delete(app);
 			session.getTransaction().commit();
 		} catch (ServiceHibernateException ex) {

@@ -24,15 +24,12 @@ import com.epul.permispiste.service.ServiceHibernate;
 public class InscriptionHClient {
 	private Session session;
 
-	public InscriptionHClient() {
-		session = ServiceHibernate.currentSession();
-	}
-
 	/**
 	 * Insertion
 	 */
 	public void insert(Inscrit inscr) throws HibernateException,
 			ServiceHibernateException {
+		session = ServiceHibernate.currentSession();
 		try {
 			session.beginTransaction();
 			session.saveOrUpdate(inscr.getCalendrier()); // calendrier must be
@@ -53,6 +50,7 @@ public class InscriptionHClient {
 	 */
 	public boolean checkFind(Apprenant a, Calendrier c, Jeu j)
 			throws HibernateException, ServiceHibernateException {
+		session = ServiceHibernate.currentSession();
 		try {
 			Query query = session
 					.createQuery("SELECT inscr FROM Inscrit inscr WHERE inscr.apprenant = :a and inscr.calendrier = :c and inscr.jeu = :j");
@@ -60,7 +58,7 @@ public class InscriptionHClient {
 			query.setParameter("c", c);
 			query.setParameter("j", j);
 
-			return (null != query.uniqueResult());
+			return null != query.uniqueResult();
 		} catch (Exception ex) {
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
@@ -75,6 +73,8 @@ public class InscriptionHClient {
 									 Mission m,
 									 Objectif obj) 
 			throws HibernateException, ServiceHibernateException {
+		session = ServiceHibernate.currentSession();
+		
 		List<Object[]> objs = new ArrayList<>();
 		
 		try {
@@ -86,15 +86,6 @@ public class InscriptionHClient {
 						+ "JOIN obj.missions m "
 						+ "JOIN FETCH m.jeu j "
 						+ "JOIN j.inscrits i ";
-						/*+ "LEFT JOIN i.apprenant.obtients obt "
-						+ "LEFT JOIN obt.calendrier obtC "
-						+ "WHERE (obt = null or (obt.action = act and obtC.datejour >= i.calendrier "
-						+ "and obt.valeurfin-obt.valeurdebut = ("
-															+ "SELECT MAX(obtM.valeurfin-obtM.valeurdebut) "
-															+ "FROM Obtient obtM "
-															+ "WHERE obtM.apprenant = i.apprenant and obtM.action = act and obtM.calendrier >= i.calendrier)"
-												+ ")"
-						+ ")  ";*/
 					
 			//apprenant
 			str += "WHERE i.apprenant = :a ";
@@ -140,7 +131,7 @@ public class InscriptionHClient {
 			System.out.println(ex);
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
-	
+			
 		return objs;
 	}
 }

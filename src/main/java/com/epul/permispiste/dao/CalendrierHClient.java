@@ -13,15 +13,12 @@ import java.util.*;
 public class CalendrierHClient {
 	private Session session;
 	
-	public CalendrierHClient() {
-		session = ServiceHibernate.currentSession();
-	}
-
-
 	/**
 	 * Find one by id
 	 */
 	public Calendrier find(Date datejour) throws ServiceHibernateException, Exception {
+		session = ServiceHibernate.currentSession();
+		
 		Calendrier unCal = null;
 		try {
 			Query query = session.createQuery("SELECT c FROM Calendrier AS c WHERE c.datejour = :datejour");

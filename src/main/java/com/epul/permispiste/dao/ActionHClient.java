@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import metier.Action;
-import metier.Apprenant;
-import metier.Regle;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -16,8 +14,6 @@ import com.epul.permispiste.gestiondeserreurs.ServiceHibernateException;
 import com.epul.permispiste.service.ServiceHibernate;
 
 public class ActionHClient {
-
-	private List<Apprenant> mesApprenants = null;
 	private Session session;
 	
 	public ActionHClient() {

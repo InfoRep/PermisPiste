@@ -8,7 +8,7 @@
 <t:layout>
 	<jsp:attribute name="pageTitle">Missions</jsp:attribute>
 	
-	<jsp:attribute name="title">Liste des actions triées pour "${apprenant.prenomapprenant} ${apprenant.nomapprenant}" : </jsp:attribute>
+	<jsp:attribute name="title">Liste des actions triées pour <span style="color:#AAA">${apprenant.prenomapprenant} ${apprenant.nomapprenant}</span> : </jsp:attribute>
 	
 	<jsp:attribute name="javascripts">
 		<script type="text/javascript">
@@ -287,11 +287,11 @@
 								<c:choose>
 									<c:when test="${okAction == true}">
 										<div class="btn btn-success" style="cursor:default">Validé</div>
-										<input type="hidden" class="actionValid" value="0" />
+										<input type="hidden" class="actionValid" value="1" />
 									</c:when>
 									<c:otherwise>
 										<div class="btn btn-danger" style="cursor:default">Echec</div>
-										<input type="hidden" class="actionValid" value="1" />
+										<input type="hidden" class="actionValid" value="0" />
 									</c:otherwise>
 								</c:choose>										     				
 							</c:when>

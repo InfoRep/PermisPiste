@@ -9,7 +9,7 @@
 	<jsp:attribute name="pageTitle">Liste des jeux</jsp:attribute>
 	
 	<jsp:attribute name="title">
-		Liste de jeux<c:if test="${not empty sJeu}"> avec "${sJeu}"</c:if> : (${fn:length(mesJeux)})
+		Liste de jeux<c:if test="${not empty sJeu}"> avec <span style="color:#AAA">${sJeu}</span></c:if> : (${fn:length(mesJeux)})
 	</jsp:attribute>
 	
 	<jsp:body>

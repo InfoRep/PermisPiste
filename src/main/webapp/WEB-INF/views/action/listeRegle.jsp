@@ -9,7 +9,7 @@
 	<jsp:attribute name="pageTitle">Liste des Actions</jsp:attribute>
 	
 	<jsp:attribute name="title">
-		Règles pour l'action "${action.libaction}" : (${fn:length(regles)})
+		Règles pour l'action <span style="color:#AAA">${action.libaction}</span> : (${fn:length(regles)})
 	</jsp:attribute>
 	
 	<jsp:body>

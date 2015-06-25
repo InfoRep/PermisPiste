@@ -106,7 +106,7 @@ public class MultiController extends MultiActionController {
 					
 					destinationPage = "/jeux/missions";
 				} else {
-					request.setAttribute("messError",
+					redirectAttrs.addFlashAttribute("messError",
 							"Aucun apprenant avec cet id n'a été trouvé.");
 					return new ModelAndView("redirect:/apprenant/liste");
 				}
