@@ -23,7 +23,7 @@
 		   		<h3>Pour commencer, vous pouvez vous : </h3>
 		   		<ul>
 		   			<li>1) <a href="apprenant/saisie">Enregistrer en tant qu'apprenant</a></li>
-		   			<li>2) <a href="jeux/liste">Inscrire à un jeux depuis la liste</a></li>
+		   			<li>2) <a href="jeux/liste">Inscrire à un jeu depuis la liste</a></li>
 					<li>3) <a href="missions">Accéder à la liste des missions pour valider des actions</a></li>
 		   		</ul>
 		   		<h4 class="text-success">D'autres informations comme la liste des apprenants ou des actions sont disponibles en haut à droite.</h4>

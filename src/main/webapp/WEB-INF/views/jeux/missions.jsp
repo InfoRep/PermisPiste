@@ -89,7 +89,7 @@
 				<a class="btn btn-primary" href="?idA=${apprenant.numapprenant}" style="border:2px ridge white">Retour à la racine</a>
 			</c:if>
 			<p class="btn-danger text-center" style="margin-top:5px; margin-bottom: 0; border-radius:10px 10px 0 0; padding-bottom:5px">
-				Pour pouvoir enregistrer un score pour action, il faut que l'action parent a été validée et que l'action ne possède pas déjà un score avec une date supérieure ou égale à l'inscription au jeu.
+				Pour pouvoir enregistrer un score pour une action, il faut que l'action parent soit validée et que l'action ne possède pas déjà un score avec une date supérieure ou égale à l'inscription au jeu.
 			</p>
 			<p class="btn-default text-center" style="margin-top:0; border-radius:0 0 10px 10px; padding-top:5px">Cliquez sur les icônes pour n'afficher que les jeux, missions ou objectifs</p>
 			
@@ -208,8 +208,8 @@
 							<c:if test="${not empty idM}"><c:set value="in" var="collaM" /></c:if>
 							<div id="${cpt}-${jeu.numjeu}_${mission.nummission}" class="panel-collapse collapse ${collaM}" role="tabpanel">
 								<div class="panel-body">
-									<p class="text-success">Cliquez sur un objectif pour le détail avec les actions</p>
-									<div style="font-size:24px" class="panel-group" id="accordion-${cpt}-${jeu.numjeu}_${mission.nummission}" role="tablist" aria-multiselectable="true">
+									<p class="text-success">Cliquez sur un objectif pour avoir le détail avec les actions</p>
+									<div class="panel-group" id="accordion-${cpt}-${jeu.numjeu}_${mission.nummission}" role="tablist" aria-multiselectable="true">
 					</c:if>			
 				</c:if>
 				
@@ -238,8 +238,9 @@
 						</div>
 						<c:if test="${not empty idO}"><c:set value="in" var="collaO" /></c:if>
 						<div id="${cpt}-${jeu.numjeu}_${mission.nummission}_${objectif.numobjectif}" class="panel-collapse collapse ${collaO}" role="tabpanel">
-							<div class="panel-body" style="font-size:24px">
-								<table class="table table-striped">
+							<div class="panel-body" >
+								<p>Cliquez sur le titre de l'action pour avoir le détail des règles associées.</p>
+								<table class="table table-striped" style="font-size:24px">
 				</c:if>
 				
 				<tr class="action">
