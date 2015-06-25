@@ -125,26 +125,23 @@ public class ApprenantController extends MultiActionController {
 			
 			int id = Integer.valueOf(request.getParameter("id"));
 			Apprenant app = new ApprenantHClient().getUneLigne(id);
-			if (app != null)
-			{
-				redirectAttrs.addFlashAttribute("messError",
-						"Ce numéro d'apprenant est déjà réservé !");
-				return new ModelAndView ("redirect:liste");
-			}
-			
+									
 			if (request.getParameter("type").equals("ajout"))
 			{ //ajoute d'un apprenant
+				if (app != null)
+				{
+					redirectAttrs.addFlashAttribute("messError",
+							"Ce numéro d'apprenant est déjà réservé !");
+					return new ModelAndView ("redirect:liste");
+				}
+				
 				app = new Apprenant();
-			}				
-			else 
-			{ // modification on récupère l'apprenant courant
-				app = unGestClient.getUneLigne(id);
 			}
 			
 			app.setNumapprenant(id);
 			app.setNomapprenant(request.getParameter("nom"));
 			app.setPrenomapprenant(request.getParameter("prenom"));
-			
+						
 			// sauvegarde du jouet
 			if (request.getParameter("type").equals("modif")) {
 				unGestClient.modifier(app);
@@ -161,6 +158,7 @@ public class ApprenantController extends MultiActionController {
 			return new ModelAndView ("redirect:liste");
 
 		} catch (Exception e) {
+			System.out.println(e);
 			destinationPage = "/Erreur";
 			request.setAttribute("MesErreurs", e.getMessage());
 		}

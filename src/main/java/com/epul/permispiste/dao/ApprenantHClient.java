@@ -104,6 +104,7 @@ public class ApprenantHClient {
 			
 			unApprenant = (Apprenant) query.uniqueResult();
 		} catch (ServiceHibernateException ex) {
+			System.out.println(ex);
 			throw new ServiceHibernateException("Erreur de service Hibernate: "
 					+ ex.getMessage(), ex);
 		} catch (Exception ex) {
@@ -117,13 +118,16 @@ public class ApprenantHClient {
 	 */
 	public void ajouter(Apprenant app) throws ServiceHibernateException ,Exception{
 		try {			
+			session = ServiceHibernate.currentSession();
 			session.beginTransaction();
 			session.save(app);
 			session.getTransaction().commit();
 		} catch (ServiceHibernateException ex) {
+			System.out.println(ex);
 			throw new ServiceHibernateException("Erreur de service Hibernate: "
 					+ ex.getMessage(), ex);
 		} catch (Exception ex) {
+			System.out.println(ex);
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
 	}
@@ -133,6 +137,7 @@ public class ApprenantHClient {
 	 */
 	public void modifier(Apprenant app) throws ServiceHibernateException ,Exception{
 		try {			
+			session = ServiceHibernate.currentSession();
 			session.beginTransaction();
 			session.update(app);
 			session.getTransaction().commit();
@@ -148,7 +153,7 @@ public class ApprenantHClient {
 	 * Effacer un apprenant
 	 */
 	public void effacer(Apprenant app) throws ServiceHibernateException ,Exception{
-		try {			
+		try {	
 			session.beginTransaction();
 			
 			//suppression obtient
@@ -165,6 +170,7 @@ public class ApprenantHClient {
 			throw new ServiceHibernateException("Erreur de service Hibernate: "
 					+ ex.getMessage(), ex);
 		} catch (Exception ex) {
+			System.out.println(ex);
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
 	}
