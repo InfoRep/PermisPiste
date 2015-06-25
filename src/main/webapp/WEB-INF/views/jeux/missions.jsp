@@ -106,9 +106,16 @@
 				<c:set var="objectif" value="${item[1]}"></c:set>
 				<c:set var="mission" value="${item[2]}"></c:set>
 				<c:set var="inscrit" value="${item[3]}"></c:set>
-				<c:set var="actVal" value="${item[4]}"></c:set>
-				<c:set var="actDate" value="${item[5]}"></c:set>
 				<c:set var="jeu" value="${ inscrit.jeu }"></c:set>
+				
+				<c:set var="actVal" value="0"></c:set>
+				<c:set var="actDate" value=""></c:set>
+				<c:forEach items="${inscrit.apprenant.obtients}" var="obt">
+					<c:if test="${obt.action == action && obt.calendrier.datejour >= inscrit.calendrier.datejour && obt.valeurfin-obt.valeurdebut > actVal}">
+						<c:set var="actVal" value="${obt.valeurfin-obt.valeurdebut}"></c:set>					
+						<c:set var="actDate" value="${obt.calendrier}"></c:set>
+					</c:if>					
+				</c:forEach>
 						
 				<c:if test="${i != inscrit && not empty i && empty idO && empty idM}">
 					<c:set var="m" value="0"></c:set>

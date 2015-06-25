@@ -80,24 +80,24 @@ public class InscriptionHClient {
 		try {
 			Map<String, Object> parameters = new HashMap<>();
 			
-			String str = "SELECT act, obj, m, i, obt.valeurfin-obt.valeurdebut, obtC "
+			String str = "SELECT act, obj, m, i "
 						+ "FROM Action act "
-						+ "LEFT JOIN FETCH act.obtients obt "
-						+ "LEFT JOIN obt.calendrier obtC "
 						+ "JOIN act.objectifs obj "
 						+ "JOIN obj.missions m "
 						+ "JOIN FETCH m.jeu j "
-						+ "JOIN j.inscrits i "
-						+ "WHERE (obt = null or (obt.apprenant = i.apprenant and obtC.datejour >= i.calendrier "
+						+ "JOIN j.inscrits i ";
+						/*+ "LEFT JOIN i.apprenant.obtients obt "
+						+ "LEFT JOIN obt.calendrier obtC "
+						+ "WHERE (obt = null or (obt.action = act and obtC.datejour >= i.calendrier "
 						+ "and obt.valeurfin-obt.valeurdebut = ("
 															+ "SELECT MAX(obtM.valeurfin-obtM.valeurdebut) "
 															+ "FROM Obtient obtM "
 															+ "WHERE obtM.apprenant = i.apprenant and obtM.action = act and obtM.calendrier >= i.calendrier)"
 												+ ")"
-						+ ")  ";
+						+ ")  ";*/
 					
 			//apprenant
-			str += "and i.apprenant = :a ";
+			str += "WHERE i.apprenant = :a ";
 			parameters.put("a", a);
 			
 			//objectif
@@ -137,6 +137,7 @@ public class InscriptionHClient {
 			
 			objs = (List<Object[]>)query.list();
 		} catch (Exception ex) {
+			System.out.println(ex);
 			throw new MonException("Erreur  Hibernate: ", ex.getMessage());
 		}
 	
