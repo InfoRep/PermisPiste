@@ -55,6 +55,9 @@ public class MultiController extends MultiActionController {
 		return "/index";
 	}
 
+	/**
+	 * Missions 
+	 */
 	@RequestMapping(value = "/missions")
 	public ModelAndView missions(HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes redirectAttrs)

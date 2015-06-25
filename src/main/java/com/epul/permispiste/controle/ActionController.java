@@ -30,7 +30,7 @@ public class ActionController extends MultiActionController {
 			.getLogger(ActionController.class);
 
 	/**
-	 * Affichage de tous les apprenants
+	 * Affichage de toutes les actions
 	 */
 	@RequestMapping(value = "/actions/liste")
 	public ModelAndView liste(HttpServletRequest request,
@@ -85,6 +85,35 @@ public class ActionController extends MultiActionController {
 		}
 		
 		return new ModelAndView(destinationPage);		
+	}
+	
+	/**
+	 * Enregistrer une action pour un apprenant (Relation Obtient)
+	 */
+	@RequestMapping(value = "/actions/enregScore")
+	public ModelAndView enregObtient(HttpServletRequest request,
+			HttpServletResponse response) 
+					throws Exception {
+		String destinationPage;	
+		try {			
+			String idA = request.getParameter("idA");
+			if (idA == null)
+			{
+		
+				
+				return new ModelAndView("redirect:/actions/liste");
+			} else {
+				Action action = new ActionHClient().find(Integer.valueOf(idA));
+				request.setAttribute("action", action);
+				
+				destinationPage = "/action/listeRegle";
+			}						
+		} catch (Exception e) {
+			destinationPage = "/Erreur";	
+			request.setAttribute("MesErreurs", e.getMessage());
+		}
+		
+		return new ModelAndView(destinationPage);	
 	}
 }
 

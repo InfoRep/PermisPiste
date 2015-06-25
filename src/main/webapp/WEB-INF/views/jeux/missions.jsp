@@ -88,7 +88,7 @@
 			<c:if test="${not empty idO or not empty idM or not empty idJ or not empty idC}">
 				<a class="btn btn-default" href="?idA=${apprenant.numapprenant}">Retour à la racine</a>
 			</c:if>
-			
+			<p class="text-danger">Le score obtenu pour une action doit avoir été enregistré après l'inscription au jeu pour être pris en compte.</p>
 			<p>Cliquez sur les icônes pour n'afficher que les jeux, missions ou objectifs</p>
 			
 			<c:if test="${empty idO && empty idM }">
@@ -160,8 +160,8 @@
 									</div>
 								</div>
 							</div>
-							
-							<div id="${cpt}-${ jeu.numjeu }" class="panel-collapse collapse" role="tabpanel">
+							<c:if test="${not empty idJ}"><c:set value="in" var="collaJ" /></c:if>
+							<div id="${cpt}-${ jeu.numjeu }" class="panel-collapse collapse ${collaJ}" role="tabpanel">
 								<div class="panel-body">
 									<p class="text-success">Cliquez sur une mission pour voir les objectifs</p>
 									<div class="panel-group" id="accordion-${cpt}-${ jeu.numjeu }" role="tablist" aria-multiselectable="true">
@@ -235,7 +235,7 @@
 				
 				<tr class="action">
 					<td>
-						${action.libaction}
+						<a href="actions/regles?idA=${action.numaction}" style="color:black; text-decoration:none">${action.libaction}</a>
 					</td>
 					<td>
 						<c:if test="${not empty actDate}">
@@ -243,14 +243,58 @@
 						</c:if>
 					</td>
 					<td width="100" class="text-right">
+						<!-- Check Action parent  -->
+						<c:set var="okActParent" value="false" />
+						<c:set var="obtParent" value="" />
 						<c:choose>
-							<c:when test="${not empty actDate && actVal >= 0 && ((not empty action.action && action.action.obtients.length > 0) || empty action.action)}">
-								<div class="btn btn-default">Terminé</div>
-		     				<input type="hidden" class="actionValid" value="1" />
+							<c:when test="${not empty action.action}">
+								<c:forEach  items="${action.action.obtients}"  var="obtP" >
+									<c:if test="${obtP.apprenant == i.apprenant && obtP.calendrier.datejour >= i.calendrier.datejour 
+												&& (empty obtParent || (not empty obtParent && obtParent.valeurfin-obtParent.valeurdebut < obtP.valeurfin-obtP.valeurdebut))}">
+										<c:set var="obtParent" value="${obtP}" />
+									</c:if>
+								</c:forEach>
+								<c:if test="${not empty obtParent}">
+									<c:set value="true" var="okActParent" />
+									<c:forEach items="${action.action.regles}" var="regP">
+										<c:if test="${regP.scoremin > obtParent.valeurfin-obtParent.valeurdebut}">
+											<c:set value="false" var="okActParent" />
+										</c:if>
+									</c:forEach>
+								</c:if>
+							</c:when>
+							<c:otherwise>
+								<c:set var="okActParent" value="true" />
+							</c:otherwise>
+						</c:choose>
+
+						<c:choose>
+							<c:when test="${not empty actDate && okActParent == true}">
+								<c:set var="okAction" value="true" />
+								<c:forEach items="${action.regles}" var="regP">
+									<c:if test="${regP.scoremin > actVal}">
+										<c:set value="false" var="okAction" />
+									</c:if>
+								</c:forEach>							
+							
+								<c:choose>
+									<c:when test="${okAction == true}">
+										<div class="btn btn-success" style="cursor:default">Validé</div>
+										<input type="hidden" class="actionValid" value="0" />
+									</c:when>
+									<c:otherwise>
+										<div class="btn btn-danger" style="cursor:default">Echec</div>
+										<input type="hidden" class="actionValid" value="1" />
+									</c:otherwise>
+								</c:choose>										     				
+							</c:when>
+							<c:when test="${okActParent != true}">
+								<input type="hidden" class="actionValid" value="0" />
+								<div class="btn btn-danger" style="cursor:default">"${action.action.libaction}" requis</div>
 							</c:when>
 							<c:otherwise>
 								<input type="hidden" class="actionValid" value="0" />
-								<a href="#" class="btn btn-primary">Entrer un score</a>
+								<a href="actions/enregScore?idA=${action.numaction}&idAp=${i.apprenant.numapprenant}" class="btn btn-primary">Entrer un score</a>
 							</c:otherwise>
 						</c:choose>	
 					</td>
