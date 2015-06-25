@@ -256,8 +256,8 @@
 						<c:choose>
 							<c:when test="${not empty action.action}">
 								<c:forEach  items="${action.action.obtients}"  var="obtP" >
-									<c:if test="${obtP.apprenant == i.apprenant && obtP.calendrier.datejour >= i.calendrier.datejour 
-												&& (empty obtParent || (not empty obtParent && obtParent.valeurfin-obtParent.valeurdebut < obtP.valeurfin-obtP.valeurdebut))}">
+									<c:if test="${obtP.apprenant == i.apprenant && obtP.calendrier.datejour >= i.calendrier.datejour && 
+									(empty obtParent || (not empty obtParent && obtParent.valeurfin-obtParent.valeurdebut < obtP.valeurfin-obtP.valeurdebut))}">
 										<c:set var="obtParent" value="${obtP}" />
 									</c:if>
 								</c:forEach>

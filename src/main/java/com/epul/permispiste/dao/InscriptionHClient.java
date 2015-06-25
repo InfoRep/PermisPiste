@@ -129,7 +129,7 @@ public class InscriptionHClient {
 			}
 			
 			str += "GROUP BY i, j, m, obj, act ";
-			str += "ORDER BY i, j, m, obj, act ";
+			str += "ORDER BY i.calendrier DESC, i, j, m, obj, act";
 			
 			Query query = session.createQuery(str);
 			for (Entry<String, Object> e : parameters.entrySet())
