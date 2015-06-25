@@ -15,7 +15,6 @@
     
     <jsp:body>
     	<h3>Information de l'apprenant : </h3>
-    	<p>L'inscription se fait à la date d'aujourd'hui : <fmt:formatDate pattern="yyyy-MM-dd" value="${now}" /></p>
     	<br />
    		<form method="post" class="form-horizontal" action="?">
    			<input type="hidden" value="1" name="valid" />
@@ -34,6 +33,13 @@
    					<input type="text" name="prenom" id="prenom" placeholder="Prenom" class="form-control" required />
    				</div>
    			</div>			
+   			
+   			<div class="form-group">
+ 				<label for="prenom" class="control-label col-md-2">Date inscription : </label>
+   				<div class="col-md-5">
+   					<input type="text" name="date" class="date form-control" id="date" placeholder="YYYY/MM/DD" required />
+   				</div>
+   			</div>	
    			
    			<div class="form-group">
    				<div class="col-md-offset-3 col-md-9">

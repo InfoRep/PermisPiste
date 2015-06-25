@@ -18,6 +18,15 @@
    				<br/>
 		   		<p>Cette application vous permettra de suivre pas à pas votre apprentissage.</p>
 		   		<h5>En vous souhaitant une agréable visite !</h5>
+		   		<br />
+		   		
+		   		<h3>Pour commencer, vous pouvez vous : </h3>
+		   		<ul>
+		   			<li>1) <a href="apprenant/saisie">Enregistrer en tant qu'apprenant</a></li>
+		   			<li>2) <a href="jeux/liste">Inscrire à un jeux depuis la liste</a></li>
+					<li>3) <a href="missions">Accéder à la liste des missions pour valider des actions</a></li>
+		   		</ul>
+		   		<h4 class="text-success">D'autres informations comme la liste des apprenants ou des actions sont disponibles en haut à droite.</h4>
 			</div>
 			<div class="col-md-4">
 	   			<img src="resources/images/polytech.png" width="300" alt="" />

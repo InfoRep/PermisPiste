@@ -1,5 +1,6 @@
 package com.epul.permispiste.controle;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.epul.permispiste.dao.ApprenantHClient;
+import com.epul.permispiste.dao.CalendrierHClient;
 import com.epul.permispiste.dao.InscriptionHClient;
 import com.epul.permispiste.dao.JeuHClient;
 
@@ -92,7 +94,11 @@ public class JeuController extends MultiActionController {
 							"Le jeu est introuvable");
 				} else {
 					// calendrier
-					Calendrier c = new Calendrier(new Date(System.currentTimeMillis()));
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+					Date d = sdf.parse(request.getParameter("date"));
+					Calendrier c = new CalendrierHClient().find(d);
+					if (c == null)
+						c = new Calendrier(d);
 
 					// check inscription
 					if (new InscriptionHClient().checkFind(a, c, j)) 
