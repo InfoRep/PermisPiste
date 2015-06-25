@@ -66,6 +66,9 @@ public class InscriptionHClient {
 		}
 	}
 	
+	/**
+	 * Actions sur la page missions
+	 */
 	public List<Object[]> getActions(Apprenant a, 
 									 Jeu j,
 									 Calendrier c,
@@ -77,15 +80,21 @@ public class InscriptionHClient {
 		try {
 			Map<String, Object> parameters = new HashMap<>();
 			
-			String str = "SELECT act, obj, m, i, obt.valeurfin, obt.valeurdebut, c "
+			String str = "SELECT act, obj, m, i, obt.valeurfin-obt.valeurdebut, obtC "
 						+ "FROM Action act "
-						+ "LEFT JOIN FETCH act.obtients obt "	
-						+ "LEFT JOIN obt.calendrier c "
+						+ "LEFT JOIN FETCH act.obtients obt "
+						+ "LEFT JOIN obt.calendrier obtC "
 						+ "JOIN act.objectifs obj "
 						+ "JOIN obj.missions m "
 						+ "JOIN FETCH m.jeu j "
 						+ "JOIN j.inscrits i "
-						+ "WHERE (obt = null or obt.apprenant = i.apprenant) ";
+						+ "WHERE (obt = null or (obt.apprenant = i.apprenant and obtC.datejour >= i.calendrier "
+						+ "and obt.valeurfin-obt.valeurdebut = ("
+															+ "SELECT MAX(obtM.valeurfin-obtM.valeurdebut) "
+															+ "FROM Obtient obtM "
+															+ "WHERE obtM.apprenant = i.apprenant and obtM.action = act and obtM.calendrier >= i.calendrier)"
+												+ ")"
+						+ ")  ";
 					
 			//apprenant
 			str += "and i.apprenant = :a ";
@@ -97,22 +106,29 @@ public class InscriptionHClient {
 				str += "and obj = :objec ";
 				parameters.put("objec", obj);
 			}
+			
+			//missions
 			if (m != null)
 			{
 				str += "and m = :miss ";
 				parameters.put("miss", m);
 			}
+			
+			//jeu
 			if (j != null)
 			{
 				str += "and j = :je ";
 				parameters.put("je", j);
 			}
+			
+			//calendrier
 			if (c != null)
 			{
 				str += "and i.calendrier = :c ";
 				parameters.put("c", c);
 			}
 			
+			str += "GROUP BY i, j, m, obj, act ";
 			str += "ORDER BY i, j, m, obj, act ";
 			
 			Query query = session.createQuery(str);

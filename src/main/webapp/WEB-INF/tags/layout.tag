@@ -96,6 +96,17 @@
 						<li><a href="${pageContext.request.contextPath}/jeux/liste">Liste des jeux</a></li>
 					</ul>
 				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Actions
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="${pageContext.request.contextPath}/actions/regles">Règles</a></li>
+						<li class="divider"></li>
+						<li><a href="${pageContext.request.contextPath}/actions/liste">Liste des Actions</a></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->

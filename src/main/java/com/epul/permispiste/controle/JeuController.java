@@ -86,7 +86,7 @@ public class JeuController extends MultiActionController {
 
 				if (a == null) {
 					redirectAttrs.addFlashAttribute("messError",
-							"L'apprenant est introuvable");
+							"L'apprenant \""+request.getParameter("nom")+" "+request.getParameter("prenom")+"\" est introuvable");
 				} else if (j == null) {
 					redirectAttrs.addFlashAttribute("messError",
 							"Le jeu est introuvable");
@@ -100,11 +100,11 @@ public class JeuController extends MultiActionController {
 						redirectAttrs
 								.addFlashAttribute(
 										"messWarning",
-										"L'apprenant "
+										"L'apprenant \""
 												+ a.getPrenomapprenant()
 												+ " "
 												+ a.getNomapprenant()
-												+ " est dejà inscrit aujourd'hui pour le jeu "
+												+ "\" est dejà inscrit aujourd'hui pour le jeu "
 												+ j.getLibellejeu());
 					} else {
 						Inscrit inscr = new Inscrit(new InscritId(
@@ -116,10 +116,10 @@ public class JeuController extends MultiActionController {
 
 						// mess sucess
 						redirectAttrs.addFlashAttribute(
-								"messSucess",
-								"L'apprenant " + a.getPrenomapprenant() + " "
+								"messSuccess",
+								"L'apprenant \"" + a.getPrenomapprenant() + " "
 										+ a.getNomapprenant()
-										+ " est bien inscrit pour le jeu "
+										+ "\" est bien inscrit pour le jeu "
 										+ j.getLibellejeu());
 					}
 				}
