@@ -32,18 +32,15 @@ public class ServiceHibernate {
 		}
 	}
 
-	public static final ThreadLocal<Session> session = new ThreadLocal<Session>();
+	public static Session session;
 
 	public static Session currentSession() throws ServiceHibernateException {
-		Session s = null;
 		try {
-			//s = (Session) session.get();
-			// Open a new Session, if this Thread has none yet
-			if (s == null) {
-				s = sessionFactory.openSession();
-				//session.set(s);
-				System.out.println("Open session");
-			}
+			if (session != null && session.isOpen()) 
+				session.close();
+			
+			session = sessionFactory.openSession();
+			System.out.println("Open session");
 		} catch (Exception ex) {
 			System.out.println("session " + ex.getMessage());
 			throw new ServiceHibernateException(
@@ -51,34 +48,6 @@ public class ServiceHibernate {
 							+ ex.getMessage(), ex);
 
 		}
-		return s;
-	}
-
-	public static void closeSession() throws ServiceHibernateException {
-		try {
-			Session s = (Session) session.get();
-			session.set(null);
-			if (s != null)
-			{
-				s.close();
-				System.out.println("Close session");
-			}
-				
-		} catch (Exception ex) {
-			throw new ServiceHibernateException(
-					"Impossible de fermer la SessionFactory: "
-							+ ex.getMessage(), ex);
-		}
-	}
-	
-	public static void reloadSession() throws ServiceHibernateException {
-		try {
-			closeSession();
-			currentSession();
-		} catch (Exception ex) {
-			throw new ServiceHibernateException(
-					"Impossible de fermer la SessionFactory: "
-							+ ex.getMessage(), ex);
-		}
+		return session;
 	}
 }
